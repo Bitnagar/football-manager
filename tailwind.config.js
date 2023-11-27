@@ -18,7 +18,7 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         // Simple 16 column grid
-        13: "repeat(13, minmax(0, auto))",
+        13: "repeat(13, 1fr)",
       },
       colors: {
         border: "hsl(var(--border))",

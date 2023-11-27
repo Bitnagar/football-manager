@@ -1,13 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import { Input } from "@/components/ui/input";
 import ImportTeamModal from "@/components/modal/ImportTeamModal";
 import { useSelector } from "react-redux";
+import Image from "next/image";
+
+import { Input } from "@/components/ui/input";
+import EditPlayerModal from "@/components/modal/EditPlayerModal";
 
 export default function Home() {
   const players = useSelector((state: any) => state.players);
+
   return (
-    <main className="flex flex-col items-center w-full">
-      <section className="flex w-full justify-between p-5">
+    <main className="flex flex-col items-center w-full overflow-scroll">
+      <section className="sticky flex w-full justify-between p-5">
         <div>
           <p>Roster Details</p>
           <Input
@@ -25,41 +30,66 @@ export default function Home() {
           <ImportTeamModal />
         </div>
       </section>
-      {/* <section className="w-full h-full p-2 grid">
-        <div className="flex w-full justify-between">
-          <p>Player Name</p>
-          <p>Jersey Number</p>
-          <p>Position</p>
-          <p>Height</p>
-          <p>Weight</p>
-          <p>Nationality</p>
-        </div>
-        <div className="flex flex-col place-items-center gap-2">
-          <p>You do not have any players on the roster</p>
-          <Button>Import Team</Button>
-        </div>
-      </section> */}
-      <section className="grid grid-cols-13 gap-5 w-full h-full p-2">
-        {players.data &&
-          Object.keys(players.data).map((field, key) => {
-            if (field === "Flag Image") return;
-            if (field === "Player Image") return;
-            return (
-              <div key={key}>
-                <p className="mb-5">{field}</p>
-                {players.data[field].map((item: any, key: number) => {
+      <section className="flex flex-col gap-5 w-full h-full p-2">
+        <table>
+          <thead className="flex justify-between mb-5">
+            <tr>
+              {players.fields &&
+                players.fields.map((field: string, key: number) => {
+                  if (field === "Goals ") return;
+                  if (field === "Assists") return;
+                  if (field === "Clean Sheets") return;
+                  if (field === "Saves") return;
+                  if (field === "Player Image") return;
+                  if (field === "Flag Image") return;
                   return (
-                    <p
-                      className="mb-5"
+                    <th
                       key={key}
+                      className="text-xs w-56 text-left"
                     >
-                      {item}
-                    </p>
+                      {field}
+                    </th>
                   );
                 })}
-              </div>
-            );
-          })}
+            </tr>
+          </thead>
+          <tbody className="flex flex-col justify-between">
+            {players.data &&
+              players.data.map((obj: any, key: any) => {
+                return (
+                  <tr
+                    key={key}
+                    className="flex mb-2 text-sm"
+                  >
+                    <td className="flex items-center w-56 h-fit gap-2 text-sm">
+                      <Image
+                        src={obj["Flag Image"]}
+                        alt={obj["Nationality"]}
+                        width={24}
+                        height={24}
+                      />
+                      <p>{obj["Player Name"]}</p>
+                    </td>
+                    <td className="w-56">{obj["Jersey Number"]}</td>
+                    <td className="w-56">{obj["Position"]}</td>
+                    <td className="w-56">{obj["Height"] / 100} m</td>
+                    <td className="w-56">
+                      {obj["Weight"] === "Unknown"
+                        ? obj["Weight"]
+                        : obj["Weight"] + " kg"}
+                    </td>
+                    <td className="w-56">{obj["Nationality"]}</td>
+                    <td className="w-56">{obj["Starter"]}</td>
+                    <td className="w-56">{obj["Appearances"]}</td>
+                    <td className="w-56">{obj["Minutes Played"]}</td>
+                    <td>
+                      <EditPlayerModal data={obj} />
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
       </section>
     </main>
   );

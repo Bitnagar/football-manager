@@ -24,7 +24,9 @@ export default function RootLayout({
       lang="en"
       className="w-full h-full"
     >
-      <body className={poppins.className + " w-full h-full flex"}>
+      <body
+        className={poppins.className + " overflow-hidden w-full h-full flex"}
+      >
         <ReduxProvider>
           <Sidebar />
           {children}

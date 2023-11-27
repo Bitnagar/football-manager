@@ -20,39 +20,23 @@ interface ColumnData {
 
 export default function ImportTeamModal(): JSX.Element {
   const [error, setError] = useState<boolean>(false);
-  const [players, setPlayers] = useState<ColumnData>();
+  const [players, setPlayers] = useState<any>();
   const dispatch = useDispatch();
 
-  function dispatchFileSummary(results: ColumnData): void {
+  function dispatchFileSummary(results: any): void {
     let g = 0,
       d = 0,
       m = 0,
       f = 0,
       s = 0,
-      total = results["Player Name"].length;
-    for (let i = 0; i < results.Position.length; i++) {
-      switch (results.Position[i]) {
-        case "Goalkeeper":
-          g++;
-          continue;
-        case "Defender":
-          d++;
-          continue;
-        case "Midfielder":
-          m++;
-          continue;
-        case "Forward":
-          f++;
-          continue;
-        default:
-          continue;
-      }
-    }
-    let i = 0;
-    while (i < results.Starter.length) {
-      if (results.Starter[i] === "Yes") s++;
-      i++;
-    }
+      total = results.data.length;
+    results.data.forEach((data: any) => {
+      if (data["Starter"] === "Yes") s++;
+      if (data["Position"] === "Goalkeeper") g++;
+      if (data["Position"] === "Defender") d++;
+      if (data["Position"] === "Midfielder") m++;
+      if (data["Position"] === "Forward") f++;
+    });
     dispatch(
       addMetadata({
         data: {
@@ -67,37 +51,28 @@ export default function ImportTeamModal(): JSX.Element {
     );
   }
 
-  function handleFileUpload(e: any) {
+  function handleFileUpload(e: any): void {
     e.preventDefault();
     if (e.target.files[0]) {
       const fileName = document.getElementById("filename") as HTMLElement;
       fileName.innerHTML = e.target.files[0].name;
 
       // parse csv file
-      const columnData: ColumnData = {};
       Papa.parse(e.target.files[0], {
         header: true,
-        // sort by header fields
-        step: (result: Papa.ParseStepResult<any>) => {
-          const data = result.data as Record<string, string>; // Assuming the CSV has only one row
-          Object.keys(data).forEach((key) => {
-            if (!columnData[key]) {
-              columnData[key] = [];
-            }
-            columnData[key].push(data[key]);
-          });
-        },
-        complete: function () {
+        complete: function (results: Papa.ParseResult<unknown>) {
+          console.log(results);
+
           try {
             setError(false);
-            // missing values check - takes 0.1ms
-            Object.values(columnData).forEach((item) => {
-              if (item.includes(""))
-                throw Error("Missing values found in csv file.");
+            // missing values check
+            results.data.forEach((data: any) => {
+              if (Object.values(data).includes(""))
+                throw Error("Missing values found in .csv file.");
             });
             // save file summary in state
-            dispatchFileSummary(columnData);
-            setPlayers(columnData);
+            dispatchFileSummary(results);
+            setPlayers(results);
           } catch (error) {
             console.error(error);
             setError(true);
@@ -107,9 +82,8 @@ export default function ImportTeamModal(): JSX.Element {
     }
   }
 
-  function handleImportConfirm() {
+  function handleImportConfirm(): void {
     dispatch(addPlayersData(players));
-    console.log(players);
   }
 
   return (
