@@ -17,9 +17,13 @@ const playersSlice = createSlice({
     editPlayerData(state, action) {
       state.data.forEach((obj: any) => {
         if (obj["Player Image"] === action.payload.uniqueKey) {
+          obj["Player Name"] = action.payload.playerName;
           obj["Jersey Number"] = action.payload.jersey;
-          obj["Starter"] =
-            action.payload.checkboxes.yes === true ? "Yes" : "No";
+          obj["Height"] = action.payload.height;
+          obj["Weight"] = action.payload.weight;
+          obj["Nationality"] = action.payload.nationality;
+          obj["Position"] = action.payload.position;
+          obj["Starter"] = action.payload.yes === true ? "Yes" : "No";
         }
       });
     },

@@ -17,16 +17,20 @@ const metadataSlice = createSlice({
     total: 0,
   },
   reducers: {
-    addMetadata(state, action) {
-      state.defenders = action.payload.data.defenders;
-      state.goalkeepers = action.payload.data.goalkeepers;
-      state.midfielders = action.payload.data.midfielders;
-      state.forwards = action.payload.data.forwards;
-      state.starters = action.payload.data.starters;
-      state.total = action.payload.data.total;
+    addMetadata: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.data,
+      };
+    },
+    editMetadata: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.data,
+      };
     },
   },
 });
 
-export const { addMetadata } = metadataSlice.actions;
+export const { addMetadata, editMetadata } = metadataSlice.actions;
 export default metadataSlice.reducer;

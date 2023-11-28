@@ -30,28 +30,86 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { editPlayerData, deletePlayerData } from "@/store/playersSlice";
 import { useDispatch } from "react-redux";
+import nations from "@/lib/nationalities.json";
+import { editMetadata } from "@/store/metadataSlice";
+import store from "@/store/store";
 
-export default function EditPlayerModal({ data }: any) {
+export default function EditPlayerModal({ currentPlayer }: any) {
   const dispatch = useDispatch();
-  const [checkboxes, setCheckboxes] = useState({
-    yes: data["Starter"] === "Yes",
-    no: data["Starter"] === "No",
-  });
-  const [jersey, setJersey] = useState(data["Jersey Number"]);
-  const uniqueKey = data["Player Image"];
 
-  function handleEdit() {
+  function dispatchFileSummary(results: any): void {
+    let g = 0,
+      d = 0,
+      m = 0,
+      f = 0,
+      s = 0,
+      total = results.length;
+    results.forEach((data: any) => {
+      if (data["Starter"] === "Yes") s++;
+      if (data["Position"] === "Goalkeeper") g++;
+      if (data["Position"] === "Defender") d++;
+      if (data["Position"] === "Midfielder") m++;
+      if (data["Position"] === "Forward") f++;
+    });
     dispatch(
-      editPlayerData({
-        checkboxes: checkboxes,
-        jersey: jersey,
-        uniqueKey: uniqueKey,
+      editMetadata({
+        data: {
+          defenders: d,
+          goalkeepers: g,
+          midfielders: m,
+          forwards: f,
+          starters: s,
+          total: total,
+        },
       })
     );
   }
 
+  // state
+  const [mutatedPlayerData, setMutatedPlayerData] = useState({
+    yes: currentPlayer["Starter"] === "Yes",
+    no: currentPlayer["Starter"] === "No",
+    playerName: currentPlayer["Player Name"],
+    jersey: currentPlayer["Jersey Number"],
+    height: currentPlayer["Height"],
+    weight: currentPlayer["Weight"],
+    nationality: currentPlayer["Nationality"],
+    position: currentPlayer["Position"],
+  });
+
+  // unique key for editing and deleting the player
+  // - Only Player Images were unique in csv file.
+  const uniqueKey = currentPlayer["Player Image"];
+
+  function select(state: any) {
+    return state.players.data;
+  }
+
+  function handleEdit(e: any) {
+    e.preventDefault();
+    dispatch(
+      editPlayerData({
+        yes: mutatedPlayerData.yes,
+        no: mutatedPlayerData.no,
+        playerName: mutatedPlayerData.playerName,
+        jersey: mutatedPlayerData.jersey,
+        height: mutatedPlayerData.height,
+        weight: mutatedPlayerData.weight,
+        nationality: mutatedPlayerData.nationality,
+        position: mutatedPlayerData.position,
+        uniqueKey: uniqueKey,
+      })
+    );
+    let currentValue = select(store.getState());
+    dispatchFileSummary(currentValue);
+  }
+
   function handleDelete() {
-    dispatch(deletePlayerData({ uniqueKey: uniqueKey, currentPlayer: data }));
+    dispatch(
+      deletePlayerData({ uniqueKey: uniqueKey, currentPlayer: currentPlayer })
+    );
+    let currentValue = select(store.getState());
+    dispatchFileSummary(currentValue);
   }
 
   return (
@@ -77,18 +135,30 @@ export default function EditPlayerModal({ data }: any) {
                       <Label className=" self-start">Player Name</Label>
                       <Input
                         className="col-span-3"
-                        defaultValue={data["Player Name"]}
-                        disabled
+                        defaultValue={currentPlayer["Player Name"]}
+                        onChange={(e) => {
+                          setMutatedPlayerData((prev) => {
+                            return {
+                              ...prev,
+                              playerName: e.target.value,
+                            };
+                          });
+                        }}
                       />
                     </div>
                     <div>
                       <Label className=" self-start">Jersey Number</Label>
                       <Input
                         className="col-span-3"
-                        defaultValue={data["Jersey Number"]}
+                        defaultValue={currentPlayer["Jersey Number"]}
                         type="text"
                         onChange={(e) => {
-                          setJersey(e.target.value);
+                          setMutatedPlayerData((prev) => {
+                            return {
+                              ...prev,
+                              jersey: e.target.value,
+                            };
+                          });
                         }}
                       />
                     </div>
@@ -98,28 +168,62 @@ export default function EditPlayerModal({ data }: any) {
                       <Label className=" self-start">Height</Label>
                       <Input
                         className="col-span-3"
-                        defaultValue={data["Height"]}
+                        defaultValue={currentPlayer["Height"]}
+                        onChange={(e) => {
+                          setMutatedPlayerData((prev) => {
+                            return {
+                              ...prev,
+                              height: e.target.value,
+                            };
+                          });
+                        }}
                       />
                     </div>
                     <div>
                       <Label className=" self-start">Weight</Label>
                       <Input
                         className="col-span-3"
-                        defaultValue={data["Weight"]}
+                        defaultValue={currentPlayer["Weight"]}
+                        onChange={(e) => {
+                          setMutatedPlayerData((prev) => {
+                            return {
+                              ...prev,
+                              weight: e.target.value,
+                            };
+                          });
+                        }}
                       />
                     </div>
                   </div>
                   <div className="flex w-full items-center justify-start gap-4">
                     <div className="w-full">
                       <Label className=" self-start">Nationality</Label>
-                      <Select>
+                      <Select
+                        onValueChange={(e) => {
+                          setMutatedPlayerData((prev) => {
+                            return {
+                              ...prev,
+                              nationality: e,
+                            };
+                          });
+                        }}
+                      >
                         <SelectTrigger className="">
-                          <SelectValue placeholder="Theme" />
+                          <SelectValue
+                            placeholder={currentPlayer["Nationality"]}
+                          />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="light">Light</SelectItem>
-                          <SelectItem value="dark">Dark</SelectItem>
-                          <SelectItem value="system">System</SelectItem>
+                          {nations.map((nation: string, key: number) => {
+                            return (
+                              <SelectItem
+                                key={key}
+                                value={nation}
+                              >
+                                {nation}
+                              </SelectItem>
+                            );
+                          })}
                         </SelectContent>
                       </Select>
                     </div>
@@ -127,14 +231,37 @@ export default function EditPlayerModal({ data }: any) {
                   <div className="flex w-full items-center justify-start gap-4">
                     <div className="w-full">
                       <Label className=" self-start">Position</Label>
-                      <Select>
+                      <Select
+                        onValueChange={(e) => {
+                          setMutatedPlayerData((prev) => {
+                            return {
+                              ...prev,
+                              position: e,
+                            };
+                          });
+                        }}
+                      >
                         <SelectTrigger className="">
-                          <SelectValue placeholder="Theme" />
+                          <SelectValue
+                            placeholder={mutatedPlayerData.position}
+                          />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="light">Light</SelectItem>
-                          <SelectItem value="dark">Dark</SelectItem>
-                          <SelectItem value="system">System</SelectItem>
+                          {[
+                            "Goalkeeper",
+                            "Defender",
+                            "Midfielder",
+                            "Forward",
+                          ].map((pos: string, key: number) => {
+                            return (
+                              <SelectItem
+                                key={key}
+                                value={pos}
+                              >
+                                {pos}
+                              </SelectItem>
+                            );
+                          })}
                         </SelectContent>
                       </Select>
                     </div>
@@ -146,22 +273,28 @@ export default function EditPlayerModal({ data }: any) {
                         <Label htmlFor="no">No</Label>
                         <Checkbox
                           id="no"
-                          checked={checkboxes.no}
+                          checked={mutatedPlayerData.no}
                           onCheckedChange={(e: boolean) => {
-                            setCheckboxes({
-                              yes: false,
-                              no: e,
+                            setMutatedPlayerData((prev) => {
+                              return {
+                                ...prev,
+                                no: e,
+                                yes: false,
+                              };
                             });
                           }}
                         />
                         <Label htmlFor="yes">Yes</Label>
                         <Checkbox
                           id="yes"
-                          checked={checkboxes.yes}
+                          checked={mutatedPlayerData.yes}
                           onCheckedChange={(e: boolean) => {
-                            setCheckboxes({
-                              yes: e,
-                              no: false,
+                            setMutatedPlayerData((prev) => {
+                              return {
+                                ...prev,
+                                yes: e,
+                                no: false,
+                              };
                             });
                           }}
                         />
@@ -210,11 +343,3 @@ export default function EditPlayerModal({ data }: any) {
     </Menubar>
   );
 }
-
-/* 
-    How do we edit?
-    - collect all the filled values
-    - dispatch unique key and all values to reducer
-    - make a new reducer to update the state
-    - update the player.data where unique key
-*/

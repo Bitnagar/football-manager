@@ -89,7 +89,12 @@ export default function ImportTeamModal(): JSX.Element {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Import Team</Button>
+        <Button
+          variant="outline"
+          className="h-[44px]"
+        >
+          Import Team
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[800px] h-[600px] flex flex-col">
         <DialogHeader>
