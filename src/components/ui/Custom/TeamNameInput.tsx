@@ -1,11 +1,16 @@
-import { editTeamName } from "@/store/playersSlice";
+import { editTeamName } from "@/store/rosterSlice";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import EditPenSvg from "../EditPenSvg";
+import { RosterData } from "@/types/shared.types";
 
-export default function TeamNameInput({ players }: any) {
+export default function TeamNameInput({
+  rosterData,
+}: {
+  rosterData: RosterData;
+}) {
   const dispatch = useDispatch();
-  const editIconRef = useRef<any>(null);
+  const editIconRef = useRef<HTMLInputElement | null>(null);
   return (
     <div className="w-fit flex items-center">
       <input
@@ -13,7 +18,7 @@ export default function TeamNameInput({ players }: any) {
         name="teamName"
         id="teamName"
         placeholder="Enter a team name."
-        defaultValue={players.team}
+        defaultValue={rosterData.team}
         className="text-black border-none outline-none focus:outline-transparent bg-none"
         onChange={(e) => {
           dispatch(
@@ -23,15 +28,19 @@ export default function TeamNameInput({ players }: any) {
           );
         }}
         onMouseOver={() => {
-          if (players.team !== "My Team") {
+          if (rosterData.team !== "My Team") {
             let editIcon = editIconRef.current;
-            editIcon.classList.remove("hidden");
+            if (editIcon) {
+              editIcon.classList.remove("hidden");
+            }
           }
         }}
         onMouseOut={() => {
-          if (players.team !== "My Team") {
+          if (rosterData.team !== "My Team") {
             let editIcon = editIconRef.current;
-            editIcon.classList.add("hidden");
+            if (editIcon) {
+              editIcon.classList.add("hidden");
+            }
           }
         }}
       />

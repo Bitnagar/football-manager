@@ -1,9 +1,3 @@
-/* 
-    Metadata includes:
-    - file summary data
-    - number of starters
-*/
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const metadataSlice = createSlice({

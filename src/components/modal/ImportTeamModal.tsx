@@ -12,25 +12,33 @@ import Papa from "papaparse";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMetadata } from "@/store/metadataSlice";
-import { addPlayersData, addStarters } from "@/store/playersSlice";
+import { addPlayersData, addStarters } from "@/store/rosterSlice";
+import { MetaData, PlayerStats, Starters } from "@/types/shared.types";
+import { RootState } from "@/store/store";
+
+type RawCsvData = {
+  data: Array<PlayerStats>;
+  errors: any[];
+  meta: {};
+};
 
 export default function ImportTeamModal(): JSX.Element {
   const [error, setError] = useState<boolean>(false);
-  const [players, setPlayers] = useState<any>();
+  const [players, setPlayers] = useState<RawCsvData>();
   const dispatch = useDispatch();
 
   // useEffect(() => {
   //   console.log("impoort team modal rendered");
   // }, []);
 
-  function dispatchFileSummary(results: any): void {
+  function dispatchFileSummary(results: RawCsvData): void {
     let g = 0,
       d = 0,
       m = 0,
       f = 0,
       s = 0,
       total = results.data.length;
-    results.data.forEach((data: any) => {
+    results.data.forEach((data: PlayerStats) => {
       if (data["Starter"] === "Yes") s++;
       if (data["Position"] === "Goalkeeper") g++;
       if (data["Position"] === "Defender") d++;
@@ -60,13 +68,13 @@ export default function ImportTeamModal(): JSX.Element {
       // parse csv file
       Papa.parse(e.target.files[0], {
         header: true,
-        complete: function (results: Papa.ParseResult<unknown>) {
+        complete: function (results: Papa.ParseResult<any>) {
           console.log(results);
 
           try {
             setError(false);
             // missing values check
-            results.data.forEach((data: any) => {
+            results.data.forEach((data: PlayerStats) => {
               if (Object.values(data).includes(""))
                 throw Error("Missing values found in .csv file.");
             });
@@ -89,29 +97,30 @@ export default function ImportTeamModal(): JSX.Element {
       defenders: [],
       midfielders: [],
       forwards: [],
-    } as any;
+    } as Starters;
 
-    players.data.forEach((player: any) => {
-      if (player["Starter"] === "Yes") {
-        switch (player["Position"]) {
-          case "Goalkeeper":
-            starters.goalkeeper.push(player);
-            break;
-          case "Defender":
-            starters.defenders.push(player);
-            break;
-          case "Midfielder":
-            starters.midfielders.push(player);
-            break;
-          case "Forward":
-            starters.forwards.push(player);
-            break;
-
-          default:
-            break;
+    if (players) {
+      players.data.forEach((player: any) => {
+        if (player["Starter"] === "Yes") {
+          switch (player["Position"]) {
+            case "Goalkeeper":
+              starters.goalkeeper.push(player);
+              break;
+            case "Defender":
+              starters.defenders.push(player);
+              break;
+            case "Midfielder":
+              starters.midfielders.push(player);
+              break;
+            case "Forward":
+              starters.forwards.push(player);
+              break;
+            default:
+              break;
+          }
         }
-      }
-    });
+      });
+    }
     dispatch(addStarters(starters));
   }
 
@@ -193,7 +202,7 @@ function FileSummary(): JSX.Element {
     total: number;
   };
   const playerMetadata: PlayerMetadata = useSelector(
-    (state: any) => state.metadata
+    (state: RootState) => state.metadata
   );
 
   return (

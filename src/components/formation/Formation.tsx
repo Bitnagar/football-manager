@@ -1,15 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import PlayerDot from "./PlayerDot";
+import { RosterData } from "@/types/shared.types";
 
-export default function Formation({ players }: any) {
+export default function Formation({ rosterData }: { rosterData: RosterData }) {
   const MAX_Goalkeeper = 1;
   const MAX_Forwards = 3;
   const MAX_Defenders = 4;
   const MAX_Midfielders = 3;
 
   const [showPlayer, setShowPlayer] = useState<any>(
-    players.starters.goalkeeper[0]
+    rosterData.starters.goalkeeper[0]
   );
 
   function handlePlayerDotClick(player: any) {
@@ -21,10 +22,10 @@ export default function Formation({ players }: any) {
   // }, []);
 
   if (
-    players.starters.goalkeeper.length === MAX_Goalkeeper &&
-    players.starters.defenders.length === MAX_Defenders &&
-    players.starters.forwards.length === MAX_Forwards &&
-    players.starters.midfielders.length === MAX_Midfielders
+    rosterData.starters.goalkeeper.length === MAX_Goalkeeper &&
+    rosterData.starters.defenders.length === MAX_Defenders &&
+    rosterData.starters.forwards.length === MAX_Forwards &&
+    rosterData.starters.midfielders.length === MAX_Midfielders
   ) {
     return (
       <>
@@ -35,64 +36,64 @@ export default function Formation({ players }: any) {
           >
             <div className="min-w-[90px] h-full flex items-center justify-center">
               <PlayerDot
-                className="w-[32.32px] h-[32.06px] bg-yellow-600 rounded-full ml-10"
-                player={players.starters.goalkeeper[0]}
+                className="cursor-pointer w-[32.32px] h-[32.06px] bg-yellow-600 rounded-full ml-10"
+                player={rosterData.starters.goalkeeper[0]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
             </div>
             <div className="min-w-[90px] h-full transform translate-x-[-70px] flex flex-col justify-around">
               <PlayerDot
-                className="goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-16"
-                player={players.starters.defenders[0]}
+                className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-16"
+                player={rosterData.starters.defenders[0]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
               <PlayerDot
-                className="goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
-                player={players.starters.defenders[1]}
+                className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
+                player={rosterData.starters.defenders[1]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
               <PlayerDot
-                className="goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
-                player={players.starters.defenders[2]}
+                className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
+                player={rosterData.starters.defenders[2]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
               <PlayerDot
-                className="goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-16"
-                player={players.starters.defenders[3]}
+                className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-16"
+                player={rosterData.starters.defenders[3]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
             </div>
             <div className="min-w-[90px] h-full transform translate-x-[-132px] flex flex-col justify-evenly">
               <PlayerDot
-                className="goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
-                player={players.starters.midfielders[0]}
+                className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
+                player={rosterData.starters.midfielders[0]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
               <PlayerDot
-                className="goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
-                player={players.starters.midfielders[1]}
+                className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
+                player={rosterData.starters.midfielders[1]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
               <PlayerDot
-                className="goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
-                player={players.starters.midfielders[2]}
+                className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
+                player={rosterData.starters.midfielders[2]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
             </div>
             <div className="min-w-[90px] h-full transform translate-x-[-170px] flex flex-col justify-evenly">
               <PlayerDot
-                className="goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-6"
-                player={players.starters.forwards[0]}
+                className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-6"
+                player={rosterData.starters.forwards[0]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
               <PlayerDot
-                className="goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
-                player={players.starters.forwards[1]}
+                className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
+                player={rosterData.starters.forwards[1]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
               <PlayerDot
-                className="goalkeeper w-fit h-[32.06px] bg-black rounded-full ml-6"
-                player={players.starters.forwards[2]}
+                className="cursor-pointer goalkeeper w-fit h-[32.06px] bg-black rounded-full ml-6"
+                player={rosterData.starters.forwards[2]}
                 handlePlayerDotClick={handlePlayerDotClick}
               />
             </div>

@@ -3,9 +3,11 @@ import { useSelector } from "react-redux";
 import InvalidStartersModal from "@/components/formation/InvalidStartersModal";
 import Formation from "@/components/formation/Formation";
 import TeamNameInput from "@/components/ui/Custom/TeamNameInput";
+import { RootState } from "@/store/store";
+import { RosterData } from "@/types/shared.types";
 
 export default function Page() {
-  const players = useSelector((state: any) => state.players);
+  const rosterData = useSelector((state: RootState) => state.rosterData);
 
   // useEffect(() => {
   //   console.log("formation page rendered");
@@ -16,11 +18,11 @@ export default function Page() {
       <section className="sticky flex w-full justify-between">
         <div>
           <p>Formation Overview</p>
-          <TeamNameInput players={players} />
+          <TeamNameInput rosterData={rosterData} />
         </div>
       </section>
-      {players.data && <Formation players={players} />}
-      <InvalidStartersModal players={players} />
+      {rosterData.players.length > 0 && <Formation rosterData={rosterData} />}
+      <InvalidStartersModal rosterData={rosterData} />
     </main>
   );
 }

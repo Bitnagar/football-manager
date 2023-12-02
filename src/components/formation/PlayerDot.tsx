@@ -1,10 +1,15 @@
+import { PlayerStats } from "@/types/shared.types";
 import { useEffect } from "react";
 
 export default function PlayerDot({
   className,
   player,
   handlePlayerDotClick,
-}: any) {
+}: {
+  className: string;
+  player: PlayerStats;
+  handlePlayerDotClick: Function;
+}) {
   // useEffect(() => {
   //   console.log("playerDots  rendered");
   // }, []);

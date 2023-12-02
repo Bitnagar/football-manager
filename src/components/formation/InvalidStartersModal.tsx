@@ -1,6 +1,11 @@
+import { RosterData } from "@/types/shared.types";
 import { useEffect, useState } from "react";
 
-export default function InvalidDataModal({ players }: any) {
+export default function InvalidDataModal({
+  rosterData,
+}: {
+  rosterData: RosterData;
+}) {
   const MAX_Goalkeeper = 1;
   const MAX_Forwards = 3;
   const MAX_Defenders = 4;
@@ -11,7 +16,7 @@ export default function InvalidDataModal({ players }: any) {
   // }, []);
 
   // possible BUG
-  if (!players.data || players.data.length < 1) {
+  if (rosterData.players.length < 1) {
     return (
       <>
         <section className="flex w-full h-full items-center justify-center bg-[#2D2D2D] p-8">
@@ -44,10 +49,10 @@ export default function InvalidDataModal({ players }: any) {
       </>
     );
   } else if (
-    players.starters.goalkeeper.length < MAX_Goalkeeper ||
-    players.starters.defenders.length < MAX_Defenders ||
-    players.starters.forwards.length < MAX_Forwards ||
-    players.starters.midfielders.length < MAX_Midfielders
+    rosterData.starters.goalkeeper.length < MAX_Goalkeeper ||
+    rosterData.starters.defenders.length < MAX_Defenders ||
+    rosterData.starters.forwards.length < MAX_Forwards ||
+    rosterData.starters.midfielders.length < MAX_Midfielders
   ) {
     return (
       <>
@@ -68,7 +73,7 @@ export default function InvalidDataModal({ players }: any) {
             <div className="w-full h-1/4"></div>
           </div>
         </section>
-        {players.data && players.starters && (
+        {rosterData.starters && (
           <div className="absolute  w-full h-full  text-white text-center  flex items-center justify-center">
             <div className="w-[389px] h-[127px] flex flex-col items-center justify-center bg-black p-6 rounded-lg ">
               <div>
@@ -86,10 +91,10 @@ export default function InvalidDataModal({ players }: any) {
       </>
     );
   } else if (
-    players.starters.goalkeeper.length > MAX_Goalkeeper ||
-    players.starters.defenders.length > MAX_Defenders ||
-    players.starters.forwards.length > MAX_Forwards ||
-    players.starters.midfielders.length > MAX_Midfielders
+    rosterData.starters.goalkeeper.length > MAX_Goalkeeper ||
+    rosterData.starters.defenders.length > MAX_Defenders ||
+    rosterData.starters.forwards.length > MAX_Forwards ||
+    rosterData.starters.midfielders.length > MAX_Midfielders
   ) {
     return (
       <>
@@ -110,7 +115,7 @@ export default function InvalidDataModal({ players }: any) {
             <div className="w-full h-1/4"></div>
           </div>
         </section>
-        {players.data && players.starters && (
+        {rosterData.starters && (
           <div className="absolute  w-full h-full  text-white text-center  flex items-center justify-center">
             <div className="w-[379px] h-[127px] flex flex-col items-center justify-center bg-black p-6 rounded-lg ">
               <div>

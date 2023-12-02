@@ -32,19 +32,35 @@ import {
   editPlayerData,
   deletePlayerData,
   editStarters,
-} from "@/store/playersSlice";
+} from "@/store/rosterSlice";
 import { useDispatch } from "react-redux";
 import nations from "@/lib/nationalities.json";
 import { editMetadata } from "@/store/metadataSlice";
-import store from "@/store/store";
+import store, { RootState } from "@/store/store";
 import { useToast } from "@/components/ui/use-toast";
+import { PlayerStats, Starters } from "@/types/shared.types";
 
-export default function EditPlayerModal({ currentPlayer }: any) {
+type EditableData = {
+  yes: boolean;
+  no: boolean;
+  playerName: string;
+  jersey: string;
+  height: number;
+  weight: string | "Unknown";
+  nationality: string;
+  position: "Goalkeeper" | "Defender" | "Midfielder" | "Forward";
+};
+
+export default function EditPlayerModal({
+  currentPlayer,
+}: {
+  currentPlayer: PlayerStats;
+}) {
   const dispatch = useDispatch();
   const { toast } = useToast();
 
   // state
-  const [mutatedPlayerData, setMutatedPlayerData] = useState({
+  const [mutatedPlayerData, setMutatedPlayerData] = useState<EditableData>({
     yes: currentPlayer["Starter"] === "Yes",
     no: currentPlayer["Starter"] === "No",
     playerName: currentPlayer["Player Name"],
@@ -59,36 +75,8 @@ export default function EditPlayerModal({ currentPlayer }: any) {
   // - Only Player Images were unique in csv file.
   const uniqueKey = currentPlayer["Player Image"];
 
-  function dispatchFileSummary(results: any): void {
-    let g = 0,
-      d = 0,
-      m = 0,
-      f = 0,
-      s = 0,
-      total = results.length;
-    results.forEach((data: any) => {
-      if (data["Starter"] === "Yes") s++;
-      if (data["Position"] === "Goalkeeper") g++;
-      if (data["Position"] === "Defender") d++;
-      if (data["Position"] === "Midfielder") m++;
-      if (data["Position"] === "Forward") f++;
-    });
-    dispatch(
-      editMetadata({
-        data: {
-          defenders: d,
-          goalkeepers: g,
-          midfielders: m,
-          forwards: f,
-          starters: s,
-          total: total,
-        },
-      })
-    );
-  }
-
-  function select(state: any) {
-    return state.players.data;
+  function select(state: RootState) {
+    return state.rosterData.players;
   }
 
   function handleEdit(e: any) {
@@ -126,7 +114,7 @@ export default function EditPlayerModal({ currentPlayer }: any) {
         defenders: [],
         midfielders: [],
         forwards: [],
-      } as any;
+      } as Starters;
       currentValue.forEach((player: any) => {
         if (player["Starter"] === "Yes") {
           switch (player["Position"]) {
@@ -154,20 +142,49 @@ export default function EditPlayerModal({ currentPlayer }: any) {
       });
     }
   }
+  function dispatchFileSummary(updatedPlayers: PlayerStats[]): void {
+    let g = 0,
+      d = 0,
+      m = 0,
+      f = 0,
+      s = 0,
+      total = updatedPlayers.length;
+    updatedPlayers.forEach((data: any) => {
+      if (data["Starter"] === "Yes") s++;
+      if (data["Position"] === "Goalkeeper") g++;
+      if (data["Position"] === "Defender") d++;
+      if (data["Position"] === "Midfielder") m++;
+      if (data["Position"] === "Forward") f++;
+    });
+    dispatch(
+      editMetadata({
+        data: {
+          defenders: d,
+          goalkeepers: g,
+          midfielders: m,
+          forwards: f,
+          starters: s,
+          total: total,
+        },
+      })
+    );
+  }
 
   function handleDelete() {
     dispatch(
       deletePlayerData({ uniqueKey: uniqueKey, currentPlayer: currentPlayer })
     );
-    let currentValue = select(store.getState());
-    dispatchFileSummary(currentValue);
+    let updatedPlayers = select(store.getState());
+    dispatchFileSummary(updatedPlayers);
+    console.log(updatedPlayers);
+
     let starters = {
       goalkeeper: [],
       defenders: [],
       midfielders: [],
       forwards: [],
-    } as any;
-    currentValue.forEach((player: any) => {
+    } as Starters;
+    updatedPlayers.forEach((player: PlayerStats) => {
       if (player["Starter"] === "Yes") {
         switch (player["Position"]) {
           case "Goalkeeper":
@@ -253,7 +270,7 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                         className="col-span-3"
                         defaultValue={currentPlayer["Height"]}
                         onChange={(e) => {
-                          setMutatedPlayerData((prev) => {
+                          setMutatedPlayerData((prev: any) => {
                             return {
                               ...prev,
                               height: e.target.value,
@@ -268,7 +285,7 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                         className="col-span-3"
                         defaultValue={currentPlayer["Weight"]}
                         onChange={(e) => {
-                          setMutatedPlayerData((prev) => {
+                          setMutatedPlayerData((prev: EditableData) => {
                             return {
                               ...prev,
                               weight: e.target.value,
@@ -283,7 +300,7 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                       <Label className=" self-start">Nationality</Label>
                       <Select
                         onValueChange={(e) => {
-                          setMutatedPlayerData((prev) => {
+                          setMutatedPlayerData((prev: EditableData) => {
                             return {
                               ...prev,
                               nationality: e,
@@ -315,13 +332,21 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                     <div className="w-full">
                       <Label className=" self-start">Position</Label>
                       <Select
-                        onValueChange={(e) => {
-                          setMutatedPlayerData((prev) => {
-                            return {
-                              ...prev,
-                              position: e,
-                            };
-                          });
+                        onValueChange={(
+                          e:
+                            | "Goalkeeper"
+                            | "Defender"
+                            | "Midfielder"
+                            | "Forward"
+                        ) => {
+                          setMutatedPlayerData(
+                            (prev: EditableData): EditableData => {
+                              return {
+                                ...prev,
+                                position: e,
+                              };
+                            }
+                          );
                         }}
                       >
                         <SelectTrigger className="">

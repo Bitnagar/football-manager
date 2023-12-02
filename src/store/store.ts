@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import metadataSlice from "./metadataSlice";
-import playersSlice from "./playersSlice";
+import rosterSlice from "./rosterSlice";
 
 const store = configureStore({
   reducer: {
     metadata: metadataSlice,
-    players: playersSlice,
+    rosterData: rosterSlice,
   },
 });
 
