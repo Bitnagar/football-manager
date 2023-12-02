@@ -1,21 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import ImportTeamModal from "@/components/modal/ImportTeamModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Image from "next/image";
 import { X, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import EditPlayerModal from "@/components/modal/EditPlayerModal";
-import { useState, useRef, useEffect } from "react";
-import EditPenSvg from "@/components/ui/EditPenSvg";
-import { editTeamName } from "@/store/playersSlice";
+import { useState, useRef } from "react";
+import TeamNameInput from "@/components/ui/Custom/TeamNameInput";
 
 export default function Home() {
   const [search, setSearch] = useState<string>();
   const players = useSelector((state: any) => state.players);
-  const dispatch = useDispatch();
   const searchRef = useRef<any>(null);
-  const editIconRef = useRef<any>(null);
 
   function handleKeyDown(e: any) {
     if (e.key === "Enter") {
@@ -33,26 +30,9 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center w-full overflow-scroll">
       <section className="sticky flex w-full justify-between p-5">
-        <div className="">
+        <div>
           <p>Roster Details</p>
-          <div className="w-fit flex items-center">
-            <input
-              type="text"
-              name="teamName"
-              id="teamName"
-              placeholder="Enter a team name."
-              defaultValue={players.team}
-              className="text-black border-none outline-none focus:outline-transparent bg-none"
-              onChange={(e) => {
-                dispatch(
-                  editTeamName({
-                    teamName: e.target.value,
-                  })
-                );
-              }}
-            />
-            <EditPenSvg ref={editIconRef} />
-          </div>
+          <TeamNameInput players={players} />
         </div>
         <div className="flex">
           <div className="w-fit h-[44px] flex px-4 py-2 items-center rounded-md border">

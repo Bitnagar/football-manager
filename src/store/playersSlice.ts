@@ -7,7 +7,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const playersSlice = createSlice({
   name: "players",
-  initialState: { team: "My team" } as any,
+  initialState: { team: "My Team" } as any,
   reducers: {
     // team name reducer
     editTeamName(state, action) {
