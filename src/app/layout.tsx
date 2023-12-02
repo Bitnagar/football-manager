@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/sidebar/Sidebar";
 import ReduxProvider from "@/components/redux/ReduxProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -31,6 +32,7 @@ export default function RootLayout({
           <Sidebar />
           {children}
         </ReduxProvider>
+        <Toaster />
       </body>
     </html>
   );

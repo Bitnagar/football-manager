@@ -27,15 +27,37 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
-import { editPlayerData, deletePlayerData } from "@/store/playersSlice";
+import { useEffect, useState } from "react";
+import {
+  editPlayerData,
+  deletePlayerData,
+  editStarters,
+} from "@/store/playersSlice";
 import { useDispatch } from "react-redux";
 import nations from "@/lib/nationalities.json";
 import { editMetadata } from "@/store/metadataSlice";
 import store from "@/store/store";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function EditPlayerModal({ currentPlayer }: any) {
   const dispatch = useDispatch();
+  const { toast } = useToast();
+
+  // state
+  const [mutatedPlayerData, setMutatedPlayerData] = useState({
+    yes: currentPlayer["Starter"] === "Yes",
+    no: currentPlayer["Starter"] === "No",
+    playerName: currentPlayer["Player Name"],
+    jersey: currentPlayer["Jersey Number"],
+    height: currentPlayer["Height"],
+    weight: currentPlayer["Weight"],
+    nationality: currentPlayer["Nationality"],
+    position: currentPlayer["Position"],
+  });
+
+  // unique key for editing and deleting the player
+  // - Only Player Images were unique in csv file.
+  const uniqueKey = currentPlayer["Player Image"];
 
   function dispatchFileSummary(results: any): void {
     let g = 0,
@@ -65,43 +87,72 @@ export default function EditPlayerModal({ currentPlayer }: any) {
     );
   }
 
-  // state
-  const [mutatedPlayerData, setMutatedPlayerData] = useState({
-    yes: currentPlayer["Starter"] === "Yes",
-    no: currentPlayer["Starter"] === "No",
-    playerName: currentPlayer["Player Name"],
-    jersey: currentPlayer["Jersey Number"],
-    height: currentPlayer["Height"],
-    weight: currentPlayer["Weight"],
-    nationality: currentPlayer["Nationality"],
-    position: currentPlayer["Position"],
-  });
-
-  // unique key for editing and deleting the player
-  // - Only Player Images were unique in csv file.
-  const uniqueKey = currentPlayer["Player Image"];
-
   function select(state: any) {
     return state.players.data;
   }
 
   function handleEdit(e: any) {
     e.preventDefault();
-    dispatch(
-      editPlayerData({
-        yes: mutatedPlayerData.yes,
-        no: mutatedPlayerData.no,
-        playerName: mutatedPlayerData.playerName,
-        jersey: mutatedPlayerData.jersey,
-        height: mutatedPlayerData.height,
-        weight: mutatedPlayerData.weight,
-        nationality: mutatedPlayerData.nationality,
-        position: mutatedPlayerData.position,
-        uniqueKey: uniqueKey,
-      })
-    );
-    let currentValue = select(store.getState());
-    dispatchFileSummary(currentValue);
+    if (mutatedPlayerData.yes === false && mutatedPlayerData.no === false) {
+      toast({
+        title: "Unconfirmed Starter status.",
+        description: "Please tick an option for starter.",
+      });
+      return;
+    } else if (Object.values(mutatedPlayerData).includes("")) {
+      toast({
+        title: "Values missing!",
+        description: "Please make sure to fill all the values",
+      });
+      return;
+    } else {
+      dispatch(
+        editPlayerData({
+          yes: mutatedPlayerData.yes,
+          no: mutatedPlayerData.no,
+          playerName: mutatedPlayerData.playerName,
+          jersey: mutatedPlayerData.jersey,
+          height: mutatedPlayerData.height,
+          weight: mutatedPlayerData.weight,
+          nationality: mutatedPlayerData.nationality,
+          position: mutatedPlayerData.position,
+          uniqueKey: uniqueKey,
+        })
+      );
+      let currentValue = select(store.getState());
+      dispatchFileSummary(currentValue);
+      let starters = {
+        goalkeeper: [],
+        defenders: [],
+        midfielders: [],
+        forwards: [],
+      } as any;
+      currentValue.forEach((player: any) => {
+        if (player["Starter"] === "Yes") {
+          switch (player["Position"]) {
+            case "Goalkeeper":
+              starters.goalkeeper.push(player);
+              break;
+            case "Defender":
+              starters.defenders.push(player);
+              break;
+            case "Midfielder":
+              starters.midfielders.push(player);
+              break;
+            case "Forward":
+              starters.forwards.push(player);
+              break;
+
+            default:
+              break;
+          }
+        }
+      });
+      dispatch(editStarters(starters));
+      toast({
+        description: "Changes saved ✅.",
+      });
+    }
   }
 
   function handleDelete() {
@@ -110,7 +161,39 @@ export default function EditPlayerModal({ currentPlayer }: any) {
     );
     let currentValue = select(store.getState());
     dispatchFileSummary(currentValue);
+    let starters = {
+      goalkeeper: [],
+      defenders: [],
+      midfielders: [],
+      forwards: [],
+    } as any;
+    currentValue.forEach((player: any) => {
+      if (player["Starter"] === "Yes") {
+        switch (player["Position"]) {
+          case "Goalkeeper":
+            starters.goalkeeper.push(player);
+            break;
+          case "Defender":
+            starters.defenders.push(player);
+            break;
+          case "Midfielder":
+            starters.midfielders.push(player);
+            break;
+          case "Forward":
+            starters.forwards.push(player);
+            break;
+
+          default:
+            break;
+        }
+      }
+    });
+    dispatch(editStarters(starters));
   }
+
+  // useEffect(() => {
+  //   console.log("editPlayermodal rendered");
+  // });
 
   return (
     <Menubar>

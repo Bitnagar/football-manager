@@ -9,19 +9,19 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import Papa from "papaparse";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMetadata } from "@/store/metadataSlice";
-import { addPlayersData } from "@/store/playersSlice";
-
-interface ColumnData {
-  [key: string]: string[];
-}
+import { addPlayersData, addStarters } from "@/store/playersSlice";
 
 export default function ImportTeamModal(): JSX.Element {
   const [error, setError] = useState<boolean>(false);
   const [players, setPlayers] = useState<any>();
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   console.log("impoort team modal rendered");
+  // }, []);
 
   function dispatchFileSummary(results: any): void {
     let g = 0,
@@ -84,6 +84,35 @@ export default function ImportTeamModal(): JSX.Element {
 
   function handleImportConfirm(): void {
     dispatch(addPlayersData(players));
+    let starters = {
+      goalkeeper: [],
+      defenders: [],
+      midfielders: [],
+      forwards: [],
+    } as any;
+
+    players.data.forEach((player: any) => {
+      if (player["Starter"] === "Yes") {
+        switch (player["Position"]) {
+          case "Goalkeeper":
+            starters.goalkeeper.push(player);
+            break;
+          case "Defender":
+            starters.defenders.push(player);
+            break;
+          case "Midfielder":
+            starters.midfielders.push(player);
+            break;
+          case "Forward":
+            starters.forwards.push(player);
+            break;
+
+          default:
+            break;
+        }
+      }
+    });
+    dispatch(addStarters(starters));
   }
 
   return (
