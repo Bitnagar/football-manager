@@ -75,11 +75,11 @@ export default function EditPlayerModal({
   // - Only Player Images were unique in csv file.
   const uniqueKey = currentPlayer["Player Image"];
 
-  function select(state: RootState) {
+  function select(state: RootState): PlayerStats[] {
     return state.rosterData.players;
   }
 
-  function handleEdit(e: any) {
+  function handleEdit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (mutatedPlayerData.yes === false && mutatedPlayerData.no === false) {
       toast({
@@ -115,7 +115,7 @@ export default function EditPlayerModal({
         midfielders: [],
         forwards: [],
       } as Starters;
-      currentValue.forEach((player: any) => {
+      currentValue.forEach((player: PlayerStats) => {
         if (player["Starter"] === "Yes") {
           switch (player["Position"]) {
             case "Goalkeeper":
@@ -138,7 +138,7 @@ export default function EditPlayerModal({
       });
       dispatch(editStarters(starters));
       toast({
-        description: "Changes saved ✅.",
+        description: "Changes saved ✅",
       });
     }
   }
@@ -149,12 +149,12 @@ export default function EditPlayerModal({
       f = 0,
       s = 0,
       total = updatedPlayers.length;
-    updatedPlayers.forEach((data: any) => {
-      if (data["Starter"] === "Yes") s++;
-      if (data["Position"] === "Goalkeeper") g++;
-      if (data["Position"] === "Defender") d++;
-      if (data["Position"] === "Midfielder") m++;
-      if (data["Position"] === "Forward") f++;
+    updatedPlayers.forEach((Player: PlayerStats) => {
+      if (Player["Starter"] === "Yes") s++;
+      if (Player["Position"] === "Goalkeeper") g++;
+      if (Player["Position"] === "Defender") d++;
+      if (Player["Position"] === "Midfielder") m++;
+      if (Player["Position"] === "Forward") f++;
     });
     dispatch(
       editMetadata({
@@ -170,7 +170,8 @@ export default function EditPlayerModal({
     );
   }
 
-  function handleDelete() {
+  function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
     dispatch(
       deletePlayerData({ uniqueKey: uniqueKey, currentPlayer: currentPlayer })
     );
@@ -270,10 +271,10 @@ export default function EditPlayerModal({
                         className="col-span-3"
                         defaultValue={currentPlayer["Height"]}
                         onChange={(e) => {
-                          setMutatedPlayerData((prev: any) => {
+                          setMutatedPlayerData((prev) => {
                             return {
                               ...prev,
-                              height: e.target.value,
+                              height: parseFloat(e.target.value),
                             };
                           });
                         }}

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import PlayerDot from "./PlayerDot";
-import { RosterData } from "@/types/shared.types";
+import { PlayerStats, RosterData } from "@/types/shared.types";
 
 export default function Formation({ rosterData }: { rosterData: RosterData }) {
   const MAX_Goalkeeper = 1;
@@ -9,11 +9,11 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
   const MAX_Defenders = 4;
   const MAX_Midfielders = 3;
 
-  const [showPlayer, setShowPlayer] = useState<any>(
+  const [showPlayer, setShowPlayer] = useState<PlayerStats>(
     rosterData.starters.goalkeeper[0]
   );
 
-  function handlePlayerDotClick(player: any) {
+  function handlePlayerDotClick(player: PlayerStats) {
     setShowPlayer(player);
   }
 

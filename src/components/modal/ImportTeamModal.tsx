@@ -59,22 +59,24 @@ export default function ImportTeamModal(): JSX.Element {
     );
   }
 
-  function handleFileUpload(e: any): void {
+  function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
-    if (e.target.files[0]) {
+    const files = e.target.files;
+    if (files && files.length > 0) {
       const fileName = document.getElementById("filename") as HTMLElement;
-      fileName.innerHTML = e.target.files[0].name;
+      const selectedFile = files[0];
+      fileName.innerHTML = selectedFile.name;
 
       // parse csv file
-      Papa.parse(e.target.files[0], {
+      Papa.parse(selectedFile, {
         header: true,
-        complete: function (results: Papa.ParseResult<any>) {
+        complete: function (results: Papa.ParseResult<PlayerStats>) {
           console.log(results);
 
           try {
             setError(false);
             // missing values check
-            results.data.forEach((data: PlayerStats) => {
+            results.data.forEach((data) => {
               if (Object.values(data).includes(""))
                 throw Error("Missing values found in .csv file.");
             });
@@ -100,7 +102,7 @@ export default function ImportTeamModal(): JSX.Element {
     } as Starters;
 
     if (players) {
-      players.data.forEach((player: any) => {
+      players.data.forEach((player: PlayerStats) => {
         if (player["Starter"] === "Yes") {
           switch (player["Position"]) {
             case "Goalkeeper":

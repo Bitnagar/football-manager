@@ -4,7 +4,6 @@ import InvalidStartersModal from "@/components/formation/InvalidStartersModal";
 import Formation from "@/components/formation/Formation";
 import TeamNameInput from "@/components/ui/Custom/TeamNameInput";
 import { RootState } from "@/store/store";
-import { RosterData } from "@/types/shared.types";
 
 export default function Page() {
   const rosterData = useSelector((state: RootState) => state.rosterData);
