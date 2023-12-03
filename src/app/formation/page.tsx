@@ -13,15 +13,15 @@ export default function Page() {
   // }, []);
 
   return (
-    <main className="flex flex-col items-center w-full relative gap-2 p-10 rounded-lg justify-center">
-      <section className="sticky flex w-full justify-between">
+    <section className="flex flex-col items-center w-full h-full relative gap-2 p-10 rounded-lg justify-center">
+      <div className="flex w-full justify-between">
         <div>
           <p>Formation Overview</p>
           <TeamNameInput rosterData={rosterData} />
         </div>
-      </section>
+      </div>
       {rosterData.players.length > 0 && <Formation rosterData={rosterData} />}
       <InvalidStartersModal rosterData={rosterData} />
-    </main>
+    </section>
   );
 }

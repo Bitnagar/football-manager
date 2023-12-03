@@ -1,5 +1,4 @@
 import ImportTeamModal from "@/components/modal/ImportTeamModal";
-
 import TeamNameInput from "../ui/Custom/TeamNameInput";
 import { Search, X } from "lucide-react";
 // import { Input } from "../ui/input";
