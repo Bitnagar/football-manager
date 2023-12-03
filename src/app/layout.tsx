@@ -30,7 +30,7 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <Sidebar />
-          {children}
+          <main className=" w-full overflow-hidden">{children}</main>
         </ReduxProvider>
         <Toaster />
       </body>
