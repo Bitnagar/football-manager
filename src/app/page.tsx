@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Image from "next/image";
 import { X, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import EditPlayerModal from "@/components/modal/EditPlayerModal";
+import EditPlayerModal from "@/components/modal/ActionsMenu";
 import { useState, useRef } from "react";
 import TeamNameInput from "@/components/ui/Custom/TeamNameInput";
 import { PlayerStats } from "@/types/shared.types";

@@ -71,8 +71,6 @@ export default function ImportTeamModal(): JSX.Element {
       Papa.parse(selectedFile, {
         header: true,
         complete: function (results: Papa.ParseResult<PlayerStats>) {
-          console.log(results);
-
           try {
             setError(false);
             // missing values check
