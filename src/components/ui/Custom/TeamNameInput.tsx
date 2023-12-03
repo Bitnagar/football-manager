@@ -10,7 +10,7 @@ export default function TeamNameInput({
   rosterData: RosterData;
 }) {
   const dispatch = useDispatch();
-  const editIconRef = useRef<HTMLInputElement | null>(null);
+  const editIconRef = useRef<SVGSVGElement | null>(null);
   return (
     <div className="w-fit flex items-center">
       <input
