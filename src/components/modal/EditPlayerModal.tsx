@@ -1,18 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import { MoreHorizontal } from "lucide-react";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarMenu,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -27,26 +18,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
-import {
-  editPlayerData,
-  deletePlayerData,
-  editStarters,
-} from "@/store/rosterSlice";
+import { editPlayerData, editStarters } from "@/store/rosterSlice";
 import { useDispatch } from "react-redux";
 import nations from "@/lib/nationalities.json";
 import { editMetadata } from "@/store/metadataSlice";
 import store, { RootState } from "@/store/store";
 import { useToast } from "@/components/ui/use-toast";
 import { PlayerStats, Starters } from "@/types/shared.types";
+import EditPenSvg from "../ui/EditPenSvg";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 type EditableData = {
   yes: boolean;
   no: boolean;
   playerName: string;
   jersey: string;
-  height: number;
+  height: string;
   weight: string | "Unknown";
   nationality: string;
   position: "Goalkeeper" | "Defender" | "Midfielder" | "Forward";
@@ -75,13 +63,7 @@ export default function EditPlayerModal({ currentPlayer }: any) {
 
   function handleEdit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (mutatedPlayerData.yes === false && mutatedPlayerData.no === false) {
-      toast({
-        title: "Unconfirmed Starter status.",
-        description: "Please tick an option for starter.",
-      });
-      return;
-    } else if (Object.values(mutatedPlayerData).includes("")) {
+    if (Object.values(mutatedPlayerData).includes("")) {
       toast({
         title: "Values missing!",
         description: "Please make sure to fill all the values",
@@ -168,18 +150,26 @@ export default function EditPlayerModal({ currentPlayer }: any) {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Edit Player</Button>
+          <div className="flex items-center">
+            <EditPenSvg />
+            <Button
+              type="button"
+              variant={"simple"}
+            >
+              Edit Player
+            </Button>
+          </div>
         </DialogTrigger>
-        <DialogContent className="max-w-[480px] h-[582px] flex flex-col">
-          <DialogHeader>
+        <DialogContent className="max-w-[480px] lg:h-fit flex flex-col p-6 bg-neutral-light rounded-md">
+          <DialogHeader className="items-start">
             <DialogTitle>Edit Player</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="flex w-fit items-center justify-start gap-4">
-              <div>
+            <div className="flex w-full items-center justify-between gap-4 lg:mb-2 xl:mb-4">
+              <div className="flex flex-col gap-2 ">
                 <Label className=" self-start">Player Name</Label>
                 <Input
-                  className="col-span-3"
+                  className="col-span-3 w-[274px]"
                   defaultValue={currentPlayer["Player Name"]}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
@@ -191,12 +181,12 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                   }}
                 />
               </div>
-              <div>
+              <div className="flex flex-col gap-2 ">
                 <Label className=" self-start">Jersey Number</Label>
                 <Input
+                  type="number"
                   className="col-span-3"
                   defaultValue={currentPlayer["Jersey Number"]}
-                  type="text"
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
                       return {
@@ -208,23 +198,26 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                 />
               </div>
             </div>
-            <div className="flex w-fit items-center justify-start gap-4">
-              <div>
+            <div className="flex w-full items-center justify-between gap-4 lg:mb-2 xl:mb-4">
+              <div className="flex flex-col gap-2 w-full">
                 <Label className=" self-start">Height</Label>
                 <Input
+                  type="number"
                   className="col-span-3"
                   defaultValue={currentPlayer["Height"]}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
+                      // console.log(typeof parseInt(e.target.value));
+                      // console.log(e.target.value);
                       return {
                         ...prev,
-                        height: parseFloat(e.target.value),
+                        height: e.target.value,
                       };
                     });
                   }}
                 />
               </div>
-              <div>
+              <div className="flex flex-col gap-2 w-full">
                 <Label className=" self-start">Weight</Label>
                 <Input
                   className="col-span-3"
@@ -240,8 +233,8 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                 />
               </div>
             </div>
-            <div className="flex w-full items-center justify-start gap-4">
-              <div className="w-full">
+            <div className="flex w-full items-center justify-start gap-4 lg:mb-2 xl:mb-4">
+              <div className="w-full flex flex-col gap-2">
                 <Label className=" self-start">Nationality</Label>
                 <Select
                   onValueChange={(e) => {
@@ -253,7 +246,7 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                     });
                   }}
                 >
-                  <SelectTrigger className="">
+                  <SelectTrigger>
                     <SelectValue placeholder={currentPlayer["Nationality"]} />
                   </SelectTrigger>
                   <SelectContent>
@@ -271,8 +264,8 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                 </Select>
               </div>
             </div>
-            <div className="flex w-full items-center justify-start gap-4">
-              <div className="w-full">
+            <div className="flex w-full items-center justify-start gap-4 lg:mb-2 xl:mb-4">
+              <div className="w-full flex flex-col gap-2">
                 <Label className=" self-start">Position</Label>
                 <Select
                   onValueChange={(
@@ -308,36 +301,40 @@ export default function EditPlayerModal({ currentPlayer }: any) {
             </div>
             <div className="flex w-full items-center justify-start gap-4">
               <div className="w-full flex flex-col">
-                <h1>Starter</h1>
-                <div className="flex gap-4 pt-4">
-                  <Label htmlFor="no">No</Label>
-                  <Checkbox
+                <Label className="self-start">Starter</Label>
+                <div className="flex gap-4 pt-4 items-center">
+                  <input
                     id="no"
+                    type="radio"
+                    name="no"
                     checked={mutatedPlayerData.no}
-                    onCheckedChange={(e: boolean) => {
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                       setMutatedPlayerData((prev) => {
                         return {
                           ...prev,
-                          no: e,
+                          no: event.target.checked,
                           yes: false,
                         };
                       });
                     }}
                   />
-                  <Label htmlFor="yes">Yes</Label>
-                  <Checkbox
+                  <Label htmlFor="no">No</Label>
+                  <input
                     id="yes"
+                    type="radio"
+                    name="yes"
                     checked={mutatedPlayerData.yes}
-                    onCheckedChange={(e: boolean) => {
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                       setMutatedPlayerData((prev) => {
                         return {
                           ...prev,
-                          yes: e,
+                          yes: event.target.checked,
                           no: false,
                         };
                       });
                     }}
                   />
+                  <Label htmlFor="yes">Yes</Label>
                 </div>
               </div>
             </div>
@@ -347,6 +344,7 @@ export default function EditPlayerModal({ currentPlayer }: any) {
               <Button
                 type="submit"
                 onMouseDown={handleEdit}
+                className=" transform translate-y-[-14px] w-fit self-end"
               >
                 Edit Player
               </Button>

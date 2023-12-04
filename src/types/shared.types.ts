@@ -4,7 +4,7 @@ export type PlayerStats = {
   "Clean Sheets": string | number;
   "Flag Image": string;
   "Goals ": string;
-  Height: number;
+  Height: string;
   "Jersey Number": string;
   "Minutes Played": string;
   Nationality: string;

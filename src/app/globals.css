@@ -4,17 +4,29 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    --background: 0, 0%, 13%;
+    --foreground: 0, 0%, 80%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
-    --popover: 0 0% 100%;
+    --popover: 100% 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary-orange: 36, 99%, 54%;
+    --primary-hover: 21, 88%, 39%;
+    --primary-red: 0, 64%, 51%;
+
+    --neutral-bg-1: 0, 0%, 13%;
+    --neutral-bg-2: 0, 0%, 18%;
+
+    --text-heading: 0, 0%, 97%;
+    --text-normal: 0, 0%, 80%;
+    --text-muted: 0, 0%, 60%;
+    --text-disabled: 0, 0%, 44%;
+
+    --border: 0, 0%, 29%;
+    --radius: 0.5rem;
+    --primary-foreground: 0, 0%, 97%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -28,14 +40,11 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
   }
 
-  .dark {
+  /* .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
@@ -63,7 +72,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-  }
+  } */
 }
 
 @layer base {
@@ -75,8 +84,48 @@
   }
 }
 
-#formation-container {
-  background-image: url("/assets/Field.png");
-  background-repeat: no-repeat;
-  background-position: left;
+input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid hsl(var(--border));
+  border-radius: 50%;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+}
+
+input[type="radio"]:checked {
+  border: 5px solid hsl(var(--primary-orange));
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: hsl(0, 0%, 25%);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

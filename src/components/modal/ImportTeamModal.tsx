@@ -13,8 +13,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMetadata } from "@/store/metadataSlice";
 import { addPlayersData, addStarters } from "@/store/rosterSlice";
-import { MetaData, PlayerStats, Starters } from "@/types/shared.types";
+import { PlayerStats, Starters } from "@/types/shared.types";
 import { RootState } from "@/store/store";
+import { useToast } from "../ui/use-toast";
 
 type RawCsvData = {
   data: Array<PlayerStats>;
@@ -22,10 +23,25 @@ type RawCsvData = {
   meta: {};
 };
 
-export default function ImportTeamModal(): JSX.Element {
+type PlayerMetadata = {
+  goalkeepers: number;
+  defenders: number;
+  midfielders: number;
+  forwards: number;
+  starters: number;
+  total: number;
+};
+
+export default function ImportTeamModal({
+  header,
+}: {
+  header?: boolean;
+}): JSX.Element {
   const [error, setError] = useState<boolean>(false);
-  const [players, setPlayers] = useState<RawCsvData>();
+  const [players, setPlayers] = useState<RawCsvData | null>();
   const dispatch = useDispatch();
+  const { toast } = useToast();
+  const rosterData = useSelector((state: RootState) => state.rosterData);
 
   // useEffect(() => {
   //   console.log("impoort team modal rendered");
@@ -91,15 +107,15 @@ export default function ImportTeamModal(): JSX.Element {
   }
 
   function handleImportConfirm(): void {
-    dispatch(addPlayersData(players));
-    let starters = {
-      goalkeeper: [],
-      defenders: [],
-      midfielders: [],
-      forwards: [],
-    } as Starters;
-
     if (players) {
+      dispatch(addPlayersData(players));
+
+      let starters = {
+        goalkeeper: [],
+        defenders: [],
+        midfielders: [],
+        forwards: [],
+      } as Starters;
       players.data.forEach((player: PlayerStats) => {
         if (player["Starter"] === "Yes") {
           switch (player["Position"]) {
@@ -120,29 +136,35 @@ export default function ImportTeamModal(): JSX.Element {
           }
         }
       });
+      dispatch(addStarters(starters));
+    } else {
+      toast({
+        description: "No file selected.",
+      });
     }
-    dispatch(addStarters(starters));
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          variant="outline"
-          className="h-[44px]"
+          variant={header ? "default" : "simple"}
+          className={`h-[44px] ${header ? "" : " text-primary-orange"}`}
         >
-          Import Team
+          {header && rosterData.players.length > 0
+            ? "Re-import Team"
+            : "Import Team"}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[800px] h-[600px] flex flex-col">
+      <DialogContent className="max-w-[800px] h-[600px] flex flex-col bg-neutral-light border-none shadow-custom">
         <DialogHeader>
           <DialogTitle>Importer</DialogTitle>
         </DialogHeader>
-        <span className="">Roster File</span>
+        <span>Roster File</span>
         <div
           id="input-file-container"
-          className={`flex items-center border gap-10 w-fit rounded-lg pl-2 ${
-            error ? "border-red-600" : "border-black"
+          className={`flex items-center border gap-10 w-fit rounded-lg pl-3 ${
+            error ? "border-red-600" : "border-border"
           }`}
         >
           <span id="filename">No file chosen</span>
@@ -158,14 +180,14 @@ export default function ImportTeamModal(): JSX.Element {
             onClick={() => {
               document.getElementById("file")?.click();
             }}
-            className={`bg-transparent text-black border ${
-              error ? "border-red-600" : "border-black"
+            className={`bg-transparent text-text-normal border ${
+              error ? "border-primary-red" : "border-border"
             } hover:bg-transparent`}
           >
             Select File
           </Button>
         </div>
-        {error && <p>Error</p>}
+        {error && <p className="text-primary-red font-medium">Error</p>}
         <p
           className="col-span-4"
           id="tip"
@@ -178,10 +200,11 @@ export default function ImportTeamModal(): JSX.Element {
         <DialogClose asChild>
           <Button
             type="button"
-            variant="secondary"
+            variant={players ? "default" : "ghost"}
             id="import-confirm"
-            className="mt-auto w-fit outline-none bg-transparent text-black text-right ml-auto hover:bg-transparent"
+            className="mt-auto w-fit outline-none text-right ml-auto"
             onClick={handleImportConfirm}
+            disabled={players ? false : true}
           >
             Import
           </Button>
@@ -193,31 +216,44 @@ export default function ImportTeamModal(): JSX.Element {
 
 // player Summary inside import modal component
 function FileSummary(): JSX.Element {
-  type PlayerMetadata = {
-    goalkeepers: number;
-    defenders: number;
-    midfielders: number;
-    forwards: number;
-    starters: number;
-    total: number;
-  };
   const playerMetadata: PlayerMetadata = useSelector(
     (state: RootState) => state.metadata
   );
 
   return (
-    <div>
-      {playerMetadata.total > 0 ? (
-        <>
-          <p>Total players: {playerMetadata.total}</p>
-          <p>Goalkeepers: {playerMetadata.goalkeepers}</p>
-          <p>Defenders: {playerMetadata.defenders}</p>
-          <p>Midfielders: {playerMetadata.midfielders}</p>
-          <p>Forwards: {playerMetadata.forwards}</p>
-        </>
-      ) : (
-        <></>
+    <>
+      {playerMetadata.total > 0 && (
+        <div className="flex flex-col gap-5 mt-8">
+          <h1>File Summary</h1>
+          <div className="flex w-full items-center gap-16">
+            <div>
+              <p>Total players</p>
+              <br />
+              <p className="font-semibold">{playerMetadata.total}</p>
+            </div>
+            <div>
+              <p>Goalkeepers</p>
+              <br />
+              <p className="font-semibold">{playerMetadata.goalkeepers}</p>
+            </div>
+            <div>
+              <p>Defenders</p>
+              <br />
+              <p className="font-semibold">{playerMetadata.defenders}</p>
+            </div>
+            <div>
+              <p>Midfielders</p>
+              <br />
+              <p className="font-semibold">{playerMetadata.midfielders}</p>
+            </div>
+            <div>
+              <p>Forwards</p>
+              <br />
+              <p className="font-semibold">{playerMetadata.forwards}</p>
+            </div>
+          </div>
+        </div>
       )}
-    </div>
+    </>
   );
 }
