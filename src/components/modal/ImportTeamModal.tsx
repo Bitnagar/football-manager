@@ -9,13 +9,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import Papa from "papaparse";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMetadata } from "@/store/metadataSlice";
 import { addPlayersData, addStarters } from "@/store/rosterSlice";
 import { PlayerStats, Starters } from "@/types/shared.types";
 import { RootState } from "@/store/store";
-import { useToast } from "../ui/use-toast";
+import toast from "react-hot-toast";
 
 type RawCsvData = {
   data: Array<PlayerStats>;
@@ -40,7 +40,6 @@ export default function ImportTeamModal({
   const [error, setError] = useState<boolean>(false);
   const [players, setPlayers] = useState<RawCsvData | null>();
   const dispatch = useDispatch();
-  const { toast } = useToast();
   const rosterData = useSelector((state: RootState) => state.rosterData);
 
   // useEffect(() => {
@@ -138,9 +137,7 @@ export default function ImportTeamModal({
       });
       dispatch(addStarters(starters));
     } else {
-      toast({
-        description: "No file selected.",
-      });
+      toast.error("No file selected");
     }
   }
 

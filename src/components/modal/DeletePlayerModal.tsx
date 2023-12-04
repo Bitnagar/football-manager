@@ -14,12 +14,11 @@ import { PlayerStats, Starters } from "@/types/shared.types";
 import store, { RootState } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { editMetadata } from "@/store/metadataSlice";
-import { useToast } from "../ui/use-toast";
 import DeleteIcon from "../ui/DeleteIcon";
+import toast from "react-hot-toast";
 
 export default function DeletePlayerModal({ currentPlayer }: any) {
   const dispatch = useDispatch();
-  const { toast } = useToast();
 
   // unique key for editing and deleting the player
   // - Only Player Images were unique in csv file.
@@ -95,9 +94,7 @@ export default function DeletePlayerModal({ currentPlayer }: any) {
       }
     });
     dispatch(editStarters(starters));
-    toast({
-      description: "Player Deleted ✅",
-    });
+    toast.success("Player deleted successfully.");
   }
   return (
     <>

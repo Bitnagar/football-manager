@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/sidebar/Sidebar";
 import ReduxProvider from "@/components/redux/ReduxProvider";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -53,7 +53,16 @@ export default function RootLayout({
           <Sidebar />
           <main className=" w-full overflow-hidden p-10">{children}</main>
         </ReduxProvider>
-        <Toaster />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: "#363636",
+              color: "#fff",
+            },
+          }}
+        />
       </body>
     </html>
   );

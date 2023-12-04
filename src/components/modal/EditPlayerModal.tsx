@@ -24,10 +24,10 @@ import { useDispatch } from "react-redux";
 import nations from "@/lib/nationalities.json";
 import { editMetadata } from "@/store/metadataSlice";
 import store, { RootState } from "@/store/store";
-import { useToast } from "@/components/ui/use-toast";
 import { PlayerStats, Starters } from "@/types/shared.types";
 import EditPenSvg from "../ui/EditPenSvg";
 import { DialogClose } from "@radix-ui/react-dialog";
+import toast from "react-hot-toast";
 
 type EditableData = {
   yes: boolean;
@@ -41,7 +41,6 @@ type EditableData = {
 };
 
 export default function EditPlayerModal({ currentPlayer }: any) {
-  const { toast } = useToast();
   const dispatch = useDispatch();
   const uniqueKey = currentPlayer["Player Image"];
 
@@ -64,10 +63,11 @@ export default function EditPlayerModal({ currentPlayer }: any) {
   function handleEdit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (Object.values(mutatedPlayerData).includes("")) {
-      toast({
-        title: "Values missing!",
-        description: "Please make sure to fill all the values",
-      });
+      // toast({
+      //   title: "Values missing!",
+      //   description: "Please make sure to fill all the values",
+      // });
+      toast.error("Failed to edit player. Make sure to fill all values.");
       return;
     } else {
       dispatch(
@@ -113,9 +113,7 @@ export default function EditPlayerModal({ currentPlayer }: any) {
         }
       });
       dispatch(editStarters(starters));
-      toast({
-        description: "Changes saved ✅",
-      });
+      toast.success("Player edited successfully.");
     }
   }
 
@@ -207,8 +205,6 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                   defaultValue={currentPlayer["Height"]}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
-                      // console.log(typeof parseInt(e.target.value));
-                      // console.log(e.target.value);
                       return {
                         ...prev,
                         height: e.target.value,
