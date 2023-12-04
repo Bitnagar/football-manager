@@ -101,7 +101,7 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
                 </div>
               </div>
             </div>
-            <div className="lg:min-w-[290px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] text-white rounded-sm p-6">
+            <div className="lg:min-w-[320px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] text-white rounded-sm p-6">
               <div
                 style={{
                   backgroundImage: `url(${showPlayer["Player Image"]})`,
@@ -120,7 +120,7 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
                     {showPlayer["Jersey Number"]}
                   </h1>
                 </div>
-                <div className="flex flex-col gap-5 mb-5">
+                <div className="flex flex-col gap-5 lg:mb-4 xl:mb-6 w-full">
                   <div>
                     <h1 className="text-2xl font-normal">
                       {showPlayer["Player Name"]}
@@ -148,14 +148,16 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
                           height={16}
                           className="w-4 h-4"
                         />
-                        <h1>{showPlayer["Nationality"]}</h1>
+                        <h1 className="min-w-fit">
+                          {showPlayer["Nationality"]}
+                        </h1>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               <hr />
-              <div className="w-full h-1/4 flex justify-between mt-6">
+              <div className="w-full h-1/4 flex justify-between lg:mt-4 xl:mt-6">
                 <div className="flex flex-col gap-4">
                   <div>
                     <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
