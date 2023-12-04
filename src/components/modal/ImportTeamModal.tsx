@@ -149,14 +149,18 @@ export default function ImportTeamModal({
       <DialogTrigger asChild>
         <Button
           variant={header ? "default" : "simple"}
-          className={`h-[44px] ${header ? "" : " text-primary-orange"}`}
+          className={`lg:text-xs xl:text-sm ${
+            header
+              ? "lg:max-h-[36px] xl:max-h-[44px] xl:w-fit"
+              : " text-primary-orange"
+          }`}
         >
           {header && rosterData.players.length > 0
             ? "Re-import Team"
             : "Import Team"}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[800px] h-[600px] flex flex-col bg-neutral-light border-none shadow-custom">
+      <DialogContent className="lg:max-w-[750px] lg:h-[470px] xl:max-w-[800px] xl:h-[600px] flex flex-col bg-neutral-light border-none shadow-custom rounded-md">
         <DialogHeader>
           <DialogTitle>Importer</DialogTitle>
         </DialogHeader>
