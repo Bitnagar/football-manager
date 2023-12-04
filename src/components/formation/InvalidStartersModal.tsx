@@ -19,8 +19,8 @@ export default function InvalidDataModal({
     return (
       <>
         <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D]">
-          <div className="w-full flex items-center justify-around gap-10">
-            <div className="relative w-[808px] h-[541px] flex items-center justify-center">
+          <div className="w-full h-fit flex items-center justify-around gap-10">
+            <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image
                 src={"/assets/Field.png"}
                 alt="field image"
@@ -30,7 +30,7 @@ export default function InvalidDataModal({
                 priority={true}
               />
             </div>
-            <div className=" min-w-[322px] h-[541px] flex flex-col bg-[#222222] rounded-sm p-6">
+            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] text-white rounded-sm p-6">
               <div className=" w-full h-3/4">
                 <div>
                   <h1></h1>
@@ -65,7 +65,7 @@ export default function InvalidDataModal({
       <>
         <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D]">
           <div className="flex items-center gap-10">
-            <div className="relative w-[808px] h-[541px] flex items-center justify-center">
+            <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image
                 src={"/assets/Field.png"}
                 alt="field image"
@@ -75,7 +75,7 @@ export default function InvalidDataModal({
                 priority={true}
               />
             </div>
-            <div className=" min-w-[322px] h-[541px] flex flex-col bg-[#222222] rounded-sm p-6">
+            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] rounded-sm p-6">
               <div className=" w-full h-3/4">
                 <div>
                   <h1></h1>
@@ -113,7 +113,7 @@ export default function InvalidDataModal({
       <>
         <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D]">
           <div className="flex items-center gap-10">
-            <div className="relative w-[808px] h-[541px] flex items-center justify-center">
+            <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image
                 src={"/assets/Field.png"}
                 alt="field image"
@@ -123,7 +123,7 @@ export default function InvalidDataModal({
                 priority={true}
               />
             </div>
-            <div className=" min-w-[322px] h-[541px] flex flex-col bg-[#222222] rounded-sm p-6">
+            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] rounded-sm p-6">
               <div className=" w-full h-3/4">
                 <div>
                   <h1></h1>

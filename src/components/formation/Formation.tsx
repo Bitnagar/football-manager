@@ -39,6 +39,7 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
                 width={808}
                 height={541}
                 className="absolute top-0 left-0 z-[0]"
+                priority={true}
               />
               <div className="w-full h-full flex justify-between items-center lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
                 <div className="min-w-[90px] h-full flex items-center justify-center text-white z-10">
