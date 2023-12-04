@@ -1,5 +1,4 @@
 import { PlayerStats } from "@/types/shared.types";
-import { useEffect } from "react";
 
 export default function PlayerDot({
   className,
@@ -10,9 +9,6 @@ export default function PlayerDot({
   player: PlayerStats;
   handlePlayerDotClick: Function;
 }) {
-  // useEffect(() => {
-  //   console.log("playerDots  rendered");
-  // }, []);
   return (
     <div
       className={

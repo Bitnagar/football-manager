@@ -63,10 +63,6 @@ export default function EditPlayerModal({ currentPlayer }: any) {
   function handleEdit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (Object.values(mutatedPlayerData).includes("")) {
-      // toast({
-      //   title: "Values missing!",
-      //   description: "Please make sure to fill all the values",
-      // });
       toast.error("Failed to edit player. Make sure to fill all values.");
       return;
     } else {
@@ -85,36 +81,40 @@ export default function EditPlayerModal({ currentPlayer }: any) {
       );
       let currentValue = select(store.getState());
       dispatchFileSummary(currentValue);
-      let starters = {
-        goalkeeper: [],
-        defenders: [],
-        midfielders: [],
-        forwards: [],
-      } as Starters;
-      currentValue.forEach((player: PlayerStats) => {
-        if (player["Starter"] === "Yes") {
-          switch (player["Position"]) {
-            case "Goalkeeper":
-              starters.goalkeeper.push(player);
-              break;
-            case "Defender":
-              starters.defenders.push(player);
-              break;
-            case "Midfielder":
-              starters.midfielders.push(player);
-              break;
-            case "Forward":
-              starters.forwards.push(player);
-              break;
-
-            default:
-              break;
-          }
-        }
-      });
-      dispatch(editStarters(starters));
+      dispatchStarters(currentValue);
       toast.success("Player edited successfully.");
     }
+  }
+
+  function dispatchStarters(currentValue: any) {
+    let starters = {
+      goalkeeper: [],
+      defenders: [],
+      midfielders: [],
+      forwards: [],
+    } as Starters;
+    currentValue.forEach((player: PlayerStats) => {
+      if (player["Starter"] === "Yes") {
+        switch (player["Position"]) {
+          case "Goalkeeper":
+            starters.goalkeeper.push(player);
+            break;
+          case "Defender":
+            starters.defenders.push(player);
+            break;
+          case "Midfielder":
+            starters.midfielders.push(player);
+            break;
+          case "Forward":
+            starters.forwards.push(player);
+            break;
+
+          default:
+            break;
+        }
+      }
+    });
+    dispatch(editStarters(starters));
   }
 
   function dispatchFileSummary(updatedPlayers: PlayerStats[]): void {
@@ -165,8 +165,15 @@ export default function EditPlayerModal({ currentPlayer }: any) {
           <div className="grid gap-4 py-4">
             <div className="flex w-full items-center justify-between gap-4 lg:mb-2 xl:mb-4">
               <div className="flex flex-col gap-2 ">
-                <Label className=" self-start">Player Name</Label>
+                <Label
+                  htmlFor="playerName"
+                  className=" self-start"
+                >
+                  Player Name
+                </Label>
                 <Input
+                  name="playerName"
+                  id="playerName"
                   className="col-span-3 w-[274px]"
                   defaultValue={currentPlayer["Player Name"]}
                   onChange={(e) => {
@@ -180,8 +187,15 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                 />
               </div>
               <div className="flex flex-col gap-2 ">
-                <Label className=" self-start">Jersey Number</Label>
+                <Label
+                  htmlFor="jerseyNumber"
+                  className=" self-start"
+                >
+                  Jersey Number
+                </Label>
                 <Input
+                  id="jerseyNumber"
+                  name="jerseyNumber"
                   type="number"
                   className="col-span-3"
                   defaultValue={currentPlayer["Jersey Number"]}
@@ -198,8 +212,15 @@ export default function EditPlayerModal({ currentPlayer }: any) {
             </div>
             <div className="flex w-full items-center justify-between gap-4 lg:mb-2 xl:mb-4">
               <div className="flex flex-col gap-2 w-full">
-                <Label className=" self-start">Height</Label>
+                <Label
+                  htmlFor="height"
+                  className=" self-start"
+                >
+                  Height
+                </Label>
                 <Input
+                  id="height"
+                  name="height"
                   type="number"
                   className="col-span-3"
                   defaultValue={currentPlayer["Height"]}
@@ -214,8 +235,15 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                 />
               </div>
               <div className="flex flex-col gap-2 w-full">
-                <Label className=" self-start">Weight</Label>
+                <Label
+                  htmlFor="weight"
+                  className=" self-start"
+                >
+                  Weight
+                </Label>
                 <Input
+                  id="weight"
+                  name="weight"
                   className="col-span-3"
                   defaultValue={currentPlayer["Weight"]}
                   onChange={(e) => {
@@ -231,8 +259,14 @@ export default function EditPlayerModal({ currentPlayer }: any) {
             </div>
             <div className="flex w-full items-center justify-start gap-4 lg:mb-2 xl:mb-4">
               <div className="w-full flex flex-col gap-2">
-                <Label className=" self-start">Nationality</Label>
+                <Label
+                  htmlFor="nationality"
+                  className=" self-start"
+                >
+                  Nationality
+                </Label>
                 <Select
+                  name="nationality"
                   onValueChange={(e) => {
                     setMutatedPlayerData((prev: EditableData) => {
                       return {
@@ -262,8 +296,14 @@ export default function EditPlayerModal({ currentPlayer }: any) {
             </div>
             <div className="flex w-full items-center justify-start gap-4 lg:mb-2 xl:mb-4">
               <div className="w-full flex flex-col gap-2">
-                <Label className=" self-start">Position</Label>
+                <Label
+                  htmlFor="position"
+                  className=" self-start"
+                >
+                  Position
+                </Label>
                 <Select
+                  name="position"
                   onValueChange={(
                     e: "Goalkeeper" | "Defender" | "Midfielder" | "Forward"
                   ) => {

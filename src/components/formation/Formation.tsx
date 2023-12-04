@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PlayerDot from "./PlayerDot";
 import { PlayerStats, RosterData } from "@/types/shared.types";
 import Image from "next/image";
@@ -17,10 +17,6 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
   function handlePlayerDotClick(player: PlayerStats) {
     setShowPlayer(player);
   }
-
-  // useEffect(() => {
-  //   console.log("formation component rendered");
-  // }, []);
 
   if (
     rosterData.starters.goalkeeper.length === MAX_Goalkeeper &&

@@ -17,10 +17,6 @@ export default function Home() {
     setSearch(string);
   }
 
-  // useEffect(() => {
-  //   console.log("roster page rendered");
-  // }, []);
-
   return (
     <>
       <Header
@@ -31,7 +27,7 @@ export default function Home() {
       <section className="flex flex-col w-full h-[90%] px-5 py-4 bg-neutral-light rounded-md overflow-x-scroll">
         <div className="flex flex-col items-center w-full h-full">
           <div className="flex flex-col gap-5 w-full h-full p-2">
-            {!rosterData?.players && (
+            {rosterData.players.length < 1 && (
               <div className="w-full h-full p-2 grid">
                 <div className="flex w-full justify-between text-xs">
                   <p>Player Name</p>
@@ -42,36 +38,15 @@ export default function Home() {
                   <p>Nationality</p>
                 </div>
                 <div className="flex flex-col place-items-center gap-2">
-                  <p>You do not have any rosterData on the roster</p>
+                  <p>You do not have any players on the roster</p>
                   <ImportTeamModal />
                 </div>
               </div>
             )}
-            {rosterData &&
-              rosterData.players &&
-              rosterData.players.length < 1 && (
-                <div className="w-full h-full p-2 grid">
-                  <div className="flex w-full justify-between text-xs">
-                    <p>Player Name</p>
-                    <p>Jersey Number</p>
-                    <p>Position</p>
-                    <p>Height</p>
-                    <p>Weight</p>
-                    <p>Nationality</p>
-                  </div>
-                  <div className="flex flex-col place-items-center gap-2">
-                    <p>You do not have any players on the roster</p>
-                    <ImportTeamModal />
-                  </div>
-                </div>
-              )}
             <table>
               <thead className="flex justify-between mb-5">
                 <tr>
-                  {rosterData &&
-                    rosterData.players &&
-                    rosterData.players.length > 0 &&
-                    rosterData.fields &&
+                  {rosterData.fields.length > 0 &&
                     rosterData.fields.map((field: string, key: number) => {
                       if (field === "Goals ") return;
                       if (field === "Assists") return;
@@ -92,12 +67,17 @@ export default function Home() {
               </thead>
               <tbody className="flex flex-col justify-between">
                 {!search &&
-                  rosterData &&
-                  rosterData.players &&
                   rosterData.players.length > 0 &&
                   rosterData.players.map((player: PlayerStats, key: number) => {
                     return (
                       <tr
+                        id="tableRow"
+                        style={
+                          {
+                            "--row-index": `${key * 10}ms`,
+                            opacity: 0,
+                          } as React.CSSProperties
+                        }
                         key={key}
                         className="flex mb-4 text-sm"
                       >

@@ -11,14 +11,10 @@ export default function InvalidDataModal({
   const MAX_Defenders = 4;
   const MAX_Midfielders = 3;
 
-  // useEffect(() => {
-  //   console.log("invailded modal rendered");
-  // }, []);
-
   if (rosterData.players.length < 1) {
     return (
       <>
-        <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D]">
+        <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D] rounded-md">
           <div className="w-full h-fit flex items-center justify-around gap-10">
             <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image
@@ -43,7 +39,7 @@ export default function InvalidDataModal({
             </div>
           </div>
         </div>
-        <div className="absolute  w-full h-full  text-white text-center  flex items-center justify-center ">
+        <div className="absolute  w-full h-full  text-white text-center  flex items-center justify-center rounded-md">
           <div className="w-[389px] h-[127px] flex flex-col items-center justify-center bg-neutral-light shadow-custom p-6 rounded-lg ">
             <div>
               <h1>⚠️ No player data found</h1>
@@ -63,7 +59,7 @@ export default function InvalidDataModal({
   ) {
     return (
       <>
-        <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D]">
+        <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D] rounded-md">
           <div className="flex items-center gap-10">
             <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image
@@ -111,7 +107,7 @@ export default function InvalidDataModal({
   ) {
     return (
       <>
-        <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D]">
+        <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D] rounded-md">
           <div className="flex items-center gap-10">
             <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image

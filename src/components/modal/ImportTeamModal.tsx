@@ -42,10 +42,6 @@ export default function ImportTeamModal({
   const dispatch = useDispatch();
   const rosterData = useSelector((state: RootState) => state.rosterData);
 
-  // useEffect(() => {
-  //   console.log("impoort team modal rendered");
-  // }, []);
-
   function dispatchFileSummary(results: RawCsvData): void {
     let g = 0,
       d = 0,

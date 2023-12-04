@@ -10,15 +10,16 @@ import {
 import { PlayerStats } from "@/types/shared.types";
 import EditPlayerModal from "./EditPlayerModal";
 import DeletePlayerModal from "./DeletePlayerModal";
+import { useEffect } from "react";
 
 export default function ActionsMenu({
   currentPlayer,
 }: {
   currentPlayer: PlayerStats;
 }) {
-  // useEffect(() => {
-  //   console.log("editPlayermodal rendered");
-  // });
+  useEffect(() => {
+    console.log("actions menu rendered");
+  }, []);
 
   return (
     <Menubar className="bg-transparent w-[24px] h-[24px]">

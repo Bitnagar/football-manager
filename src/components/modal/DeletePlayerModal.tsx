@@ -96,6 +96,7 @@ export default function DeletePlayerModal({ currentPlayer }: any) {
     dispatch(editStarters(starters));
     toast.success("Player deleted successfully.");
   }
+
   return (
     <>
       <Dialog>
