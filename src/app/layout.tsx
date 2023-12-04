@@ -26,11 +26,11 @@ export default function RootLayout({
       className="w-full h-full"
     >
       <body
-        className={poppins.className + " overflow-hidden w-full h-full flex"}
+        className={poppins.className + " overflow-hidden flex w-full h-full"}
       >
         <ReduxProvider>
           <Sidebar />
-          <main className=" w-full overflow-hidden">{children}</main>
+          <main className=" w-full overflow-hidden p-10">{children}</main>
         </ReduxProvider>
         <Toaster />
       </body>

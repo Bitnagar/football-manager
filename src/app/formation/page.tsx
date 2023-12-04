@@ -13,10 +13,10 @@ export default function Page() {
   // }, []);
 
   return (
-    <section className="flex flex-col items-center w-full h-full relative gap-2 p-10 rounded-lg justify-center">
+    <section className="flex flex-col items-center w-full h-full relative gap-2 rounded-lg justify-center">
       <div className="flex w-full justify-between">
         <div>
-          <p>Formation Overview</p>
+          <p className="text-primary-orange text-xs">Formation Overview</p>
           <TeamNameInput rosterData={rosterData} />
         </div>
       </div>

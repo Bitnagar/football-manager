@@ -19,7 +19,7 @@ export default function InvalidDataModal({
     return (
       <>
         <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D]">
-          <div className="flex items-center gap-10">
+          <div className="w-full flex items-center justify-around gap-10">
             <div className="relative w-[808px] h-[541px] flex items-center justify-center">
               <Image
                 src={"/assets/Field.png"}
@@ -43,8 +43,8 @@ export default function InvalidDataModal({
             </div>
           </div>
         </div>
-        <div className="absolute  w-full h-full  text-white text-center  flex items-center justify-center">
-          <div className="w-[389px] h-[127px] flex flex-col items-center justify-center bg-black p-6 rounded-lg ">
+        <div className="absolute  w-full h-full  text-white text-center  flex items-center justify-center ">
+          <div className="w-[389px] h-[127px] flex flex-col items-center justify-center bg-neutral-light shadow-custom p-6 rounded-lg ">
             <div>
               <h1>⚠️ No player data found</h1>
             </div>
@@ -89,7 +89,7 @@ export default function InvalidDataModal({
           </div>
         </div>
         <div className="absolute  w-full h-full  text-white text-center  flex items-center justify-center">
-          <div className="w-[389px] h-[127px] flex flex-col items-center justify-center bg-black p-6 rounded-lg ">
+          <div className="w-[389px] h-[127px] flex flex-col items-center justify-center bg-neutral-light shadow-custom p-6 rounded-lg ">
             <div>
               <h1>⚠️ Not enough starters</h1>
             </div>
@@ -137,7 +137,7 @@ export default function InvalidDataModal({
           </div>
         </div>
         <div className="absolute  w-full h-full  text-white text-center  flex items-center justify-center">
-          <div className="w-[379px] h-[127px] flex flex-col items-center justify-center bg-black p-6 rounded-lg ">
+          <div className="w-[379px] h-[127px] flex flex-col items-center justify-center bg-neutral-light shadow-custom p-6 rounded-lg ">
             <div>
               <h1>⚠️ There are too many starters</h1>
             </div>

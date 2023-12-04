@@ -30,9 +30,9 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
   ) {
     return (
       <>
-        <div className="flex w-full h-full items-center justify-center bg-[#2D2D2D] p-8 ">
-          <div className=" w-full h-full flex items-center justify-between gap-10">
-            <div className="relative min-w-[808px] h-[541px]">
+        <div className="flex w-full h-full items-center justify-center bg-[#2D2D2D] p-8 rounded-md">
+          <div className="w-full h-full flex items-center justify-around gap-10">
+            <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image
                 src={"/assets/Field.png"}
                 alt="field image"
@@ -40,149 +40,167 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
                 height={541}
                 className="absolute top-0 left-0 z-[0]"
               />
-              <div className="w-full h-full flex justify-between items-center">
+              <div className="w-full h-full flex justify-between items-center lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
                 <div className="min-w-[90px] h-full flex items-center justify-center text-white z-10">
                   <PlayerDot
-                    className="cursor-pointer w-[32.32px] h-[32.06px] bg-yellow-600 rounded-full ml-10"
+                    className="lg:ml-2 xl:ml-4"
                     player={rosterData.starters.goalkeeper[0]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                 </div>
-                <div className="min-w-[90px] h-full transform translate-x-[-70px] flex flex-col justify-around z-10">
+                <div className="min-w-[90px] lg:min-h-[420px] xl:h-[541px] transform lg:translate-x-[-50px] xl:translate-x-[-70px] flex flex-col lg:justify-evenly xl:justify-around z-10">
                   <PlayerDot
-                    className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-16"
+                    className="ml-16"
                     player={rosterData.starters.defenders[0]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                   <PlayerDot
-                    className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
                     player={rosterData.starters.defenders[1]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                   <PlayerDot
-                    className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
                     player={rosterData.starters.defenders[2]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                   <PlayerDot
-                    className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-16"
+                    className="ml-16"
                     player={rosterData.starters.defenders[3]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                 </div>
-                <div className="min-w-[90px] h-full transform translate-x-[-132px] flex flex-col justify-evenly">
+                <div className="min-w-[90px] lg:min-h-[420px] xl:h-[541px] transform lg:translate-x-[-88px] xl:translate-x-[-114px] flex flex-col justify-evenly">
                   <PlayerDot
-                    className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
                     player={rosterData.starters.midfielders[0]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                   <PlayerDot
-                    className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
                     player={rosterData.starters.midfielders[1]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                   <PlayerDot
-                    className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
                     player={rosterData.starters.midfielders[2]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                 </div>
-                <div className="min-w-[90px] h-full transform translate-x-[-170px] flex flex-col justify-evenly">
+                <div className="min-w-[90px] lg:min-h-[420px] xl:h-[541px] transform lg:translate-x-[-110px] xl:translate-x-[-170px] flex flex-col justify-evenly">
                   <PlayerDot
-                    className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-6"
+                    className="mr-8"
                     player={rosterData.starters.forwards[0]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                   <PlayerDot
-                    className="cursor-pointer goalkeeper w-[32.32px] h-[32.06px] bg-black rounded-full ml-10"
                     player={rosterData.starters.forwards[1]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                   <PlayerDot
-                    className="cursor-pointer goalkeeper w-fit h-[32.06px] bg-black rounded-full ml-6"
+                    className="mr-8"
                     player={rosterData.starters.forwards[2]}
                     handlePlayerDotClick={handlePlayerDotClick}
                   />
                 </div>
               </div>
             </div>
-            <div className="min-w-[322px] h-[541px] flex flex-col bg-[#222222] text-white rounded-sm p-6">
+            <div className="lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] text-white rounded-sm p-6">
               <div
                 style={{
                   backgroundImage: `url(${showPlayer["Player Image"]})`,
-                  backgroundSize: "cover", // Adjust as needed
-                  backgroundPosition: "center", // Adjust as needed
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
                   width: "100%",
-                  height: "75%", // Adjust as needed
+                  height: "75%",
                 }}
-                className={"w-full h-3/4"}
+                className="w-full h-3/4 flex flex-col justify-between"
               >
-                <div>
-                  <h1>{showPlayer["Jersey Number"]}</h1>
+                <div className="relative w-[44px] h-[109px] mt-6">
+                  <h1 className="relative text-[40px] text-primary-orange font-semibold z-[50]">
+                    {showPlayer["Jersey Number"]}
+                  </h1>
+                  <h1 className="absolute top-0 left-0 text-[109px] text-[#3A3731] font-semibold transform lg:translate-y-[-2px] xl:translate-y-[-5px] xl:translate-x-[-6px] z-0">
+                    {showPlayer["Jersey Number"]}
+                  </h1>
                 </div>
-                <div>
-                  <h1>{showPlayer["Player Name"]}</h1>
-                  <h1>{showPlayer["Position"]}</h1>
-                </div>
-                <div>
+                <div className="flex flex-col gap-5 mb-5">
                   <div>
-                    <h1>Height</h1>
-                    <h1>{showPlayer["Height"]}</h1>
+                    <h1 className="text-2xl font-normal">
+                      {showPlayer["Player Name"]}
+                    </h1>
+                    <h1 className="text-primary-orange">
+                      {showPlayer["Position"]}
+                    </h1>
                   </div>
-                  <div>
-                    <h1>Weight</h1>
-                    <h1>{showPlayer["Weight"]}</h1>
-                  </div>
-                  <div>
-                    <h1>Nationality</h1>
+                  <div className="flex gap-8">
                     <div>
-                      <img
-                        src={showPlayer["Flag Image"]}
-                        alt={showPlayer["Nationality"]}
-                        width={16}
-                        height={16}
-                      />
-                      <h1>{showPlayer["Nationality"]}</h1>
+                      <h1 className="mb-2">Height</h1>
+                      <h1>{parseInt(showPlayer["Height"]) / 100} m</h1>
+                    </div>
+                    <div>
+                      <h1 className="mb-2">Weight</h1>
+                      <h1>{showPlayer["Weight"]} kg</h1>
+                    </div>
+                    <div className="w-fit">
+                      <h1 className="mb-2">Nationality</h1>
+                      <div className="w-full flex items-center gap-2">
+                        <img
+                          src={showPlayer["Flag Image"]}
+                          alt={showPlayer["Nationality"]}
+                          width={16}
+                          height={16}
+                          className="w-4 h-4"
+                        />
+                        <h1>{showPlayer["Nationality"]}</h1>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
               <hr />
-              <div className="w-full h-1/4 flex flex-col">
-                <div className="upper flex">
+              <div className="w-full h-1/4 flex justify-between mt-6">
+                <div className="flex flex-col gap-4">
                   <div>
-                    <h1>{showPlayer["Appearances"]}</h1>
+                    <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
+                      {showPlayer["Appearances"]}
+                    </h1>
                     <h1>Appearances</h1>
                   </div>
-                  <div>
-                    <h1>{showPlayer["Minutes Played"]}</h1>
-                    <h1>Minutes Played</h1>
-                  </div>
-                </div>
-                {showPlayer["Position"] === "Goalkeeper" && (
-                  <div className="lower flex">
+                  {showPlayer["Position"] === "Goalkeeper" ? (
                     <div>
-                      <h1>{showPlayer["Clean Sheets"]}</h1>
+                      <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
+                        {showPlayer["Clean Sheets"]}
+                      </h1>
                       <h1>Clean Sheets</h1>
                     </div>
+                  ) : (
                     <div>
-                      <h1>{showPlayer["Saves"]}</h1>
-                      <h1>Saves</h1>
-                    </div>
-                  </div>
-                )}
-                {showPlayer["Position"] !== "Goalkeeper" && (
-                  <div className="lower">
-                    <div>
-                      <h1>{showPlayer["Goals "]}</h1>
+                      <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
+                        {showPlayer["Goals "]}
+                      </h1>
                       <h1>Goals</h1>
                     </div>
+                  )}
+                </div>
+                <div className="flex flex-col gap-4">
+                  <div>
+                    <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
+                      {showPlayer["Minutes Played"]}
+                    </h1>
+                    <h1>Minutes Played</h1>
+                  </div>
+                  {showPlayer["Position"] === "Goalkeeper" ? (
                     <div>
-                      <h1>{showPlayer["Assists"]}</h1>
+                      <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
+                        {showPlayer["Saves"]}
+                      </h1>
+                      <h1>Saves</h1>
+                    </div>
+                  ) : (
+                    <div>
+                      <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
+                        {showPlayer["Assists"]}
+                      </h1>
                       <h1>Assists</h1>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>

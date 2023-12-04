@@ -28,9 +28,9 @@ export default function Home() {
         search={search}
         rosterData={rosterData}
       />
-      <section className="flex flex-col w-full h-full">
+      <section className="flex flex-col w-full h-[90%] px-5 py-4 bg-neutral-light rounded-md overflow-x-scroll">
         <div className="flex flex-col items-center w-full h-full">
-          <div className="flex flex-col gap-5 w-full h-full p-2 overflow-x-scroll">
+          <div className="flex flex-col gap-5 w-full h-full p-2">
             {!rosterData?.players && (
               <div className="w-full h-full p-2 grid">
                 <div className="flex w-full justify-between text-xs">
@@ -99,7 +99,7 @@ export default function Home() {
                     return (
                       <tr
                         key={key}
-                        className="flex mb-2 text-sm"
+                        className="flex mb-4 text-sm"
                       >
                         <td className="flex items-center w-56 h-fit gap-2 text-sm">
                           <Image
@@ -112,7 +112,9 @@ export default function Home() {
                         </td>
                         <td className="w-56">{player["Jersey Number"]}</td>
                         <td className="w-56">{player["Position"]}</td>
-                        <td className="w-56">{player["Height"] / 100} m</td>
+                        <td className="w-56">
+                          {parseInt(player["Height"]) / 100} m
+                        </td>
                         <td className="w-56">
                           {player["Weight"] === "Unknown"
                             ? player["Weight"]
@@ -139,7 +141,7 @@ export default function Home() {
                       return (
                         <tr
                           key={key}
-                          className="flex mb-2 text-sm"
+                          className="flex mb-4 text-sm"
                         >
                           <td className="flex items-center w-56 h-fit gap-2 text-sm">
                             <Image
@@ -152,7 +154,9 @@ export default function Home() {
                           </td>
                           <td className="w-56">{player["Jersey Number"]}</td>
                           <td className="w-56">{player["Position"]}</td>
-                          <td className="w-56">{player["Height"] / 100} m</td>
+                          <td className="w-56">
+                            {parseInt(player["Height"]) / 100} m
+                          </td>
                           <td className="w-56">
                             {player["Weight"] === "Unknown"
                               ? player["Weight"]

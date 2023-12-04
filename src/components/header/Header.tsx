@@ -1,19 +1,19 @@
 import ImportTeamModal from "@/components/modal/ImportTeamModal";
 import TeamNameInput from "../ui/Custom/TeamNameInput";
 import { Search, X } from "lucide-react";
-// import { Input } from "../ui/input";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { RosterData } from "@/types/shared.types";
 import { Button } from "../ui/button";
 
 type Props = {
   rosterData: RosterData;
   mutateSearch: any;
-  search: any;
+  search: string | undefined;
 };
 
 export default function Header({ rosterData, mutateSearch, search }: Props) {
   const searchRef = useRef<HTMLInputElement>(null);
+  const [searchString, setSearchString] = useState<string>("");
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
@@ -25,12 +25,12 @@ export default function Header({ rosterData, mutateSearch, search }: Props) {
   }
 
   return (
-    <header className="flex max-w-screen justify-between p-5">
+    <header className="flex max-w-screen justify-between pb-6">
       <div>
-        <p>Roster Details</p>
+        <p className="text-primary-orange text-xs">Roster Details</p>
         <TeamNameInput rosterData={rosterData} />
       </div>
-      <div className="flex">
+      <div className="flex gap-2">
         <div className="w-fit h-[44px] flex px-4 py-2 items-center rounded-md border">
           <Search />
           <input
@@ -38,37 +38,43 @@ export default function Header({ rosterData, mutateSearch, search }: Props) {
             type="text"
             name="search"
             id="search"
-            className="w-fit pl-2 border-none focus:outline-transparent focus:bg-transparent"
+            placeholder="Find Player"
+            className="w-fit pl-3 border-none bg-transparent focus:outline-transparent focus:bg-transparent"
             onKeyDownCapture={handleKeyDown}
+            onChange={(e) => {
+              setSearchString(e.target.value);
+            }}
             disabled={rosterData.players.length > 0 ? false : true}
           />
-          {search ? (
+          {search && (
             <X
               onClick={() => {
                 mutateSearch("");
                 let input = searchRef.current;
                 if (input) {
                   input.value = "";
+                  setSearchString("");
                 }
               }}
             />
-          ) : (
+          )}
+          {searchString && !search && (
             <Button
+              variant={"ghost"}
               type="button"
-              className=""
+              className="text-primary-orange"
               onClick={() => {
                 let input = searchRef.current;
                 if (input && input.value) {
                   mutateSearch(input.value);
                 }
               }}
-              disabled={rosterData.players.length > 0 ? false : true}
             >
               Search
             </Button>
           )}
         </div>
-        <ImportTeamModal />
+        <ImportTeamModal header={true} />
       </div>
     </header>
   );

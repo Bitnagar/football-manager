@@ -1,11 +1,19 @@
-import Link from "next/link";
+import { MenuIcon } from "lucide-react";
+import Image from "next/image";
+import FormationIcon from "../ui/Custom/icons/FormationIcon";
+import HamburgerIcon from "../ui/Custom/icons/HamburgerIcon";
 
 export default function Sidebar() {
   return (
-    <aside className="flex flex-col h-full p-5 gap-10 border border-white">
-      <p>Logo</p>
-      <Link href={"/"}>Roster</Link>
-      <Link href={"/formation"}>Formation</Link>
+    <aside className="w-[60px] h-full flex flex-col items-center  p-5 gap-10 bg-[#111111]">
+      <Image
+        src={"/assets/logo.svg"}
+        alt="logo"
+        width={100}
+        height={100}
+      />
+      <HamburgerIcon />
+      <FormationIcon />
     </aside>
   );
 }

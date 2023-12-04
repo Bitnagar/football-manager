@@ -19,7 +19,7 @@ export default function TeamNameInput({
         id="teamName"
         placeholder="Enter a team name."
         defaultValue={rosterData.team}
-        className="text-black border-none outline-none focus:outline-transparent bg-none"
+        className="w-fit border-none outline-none bg-transparent text-text-heading font-semibold text-lg focus:outline-transparent bg-none focus:bg-transparent active:bg-transparent"
         onChange={(e) => {
           dispatch(
             editTeamName({

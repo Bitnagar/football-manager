@@ -15,6 +15,7 @@ import store, { RootState } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { editMetadata } from "@/store/metadataSlice";
 import { useToast } from "../ui/use-toast";
+import DeleteIcon from "../ui/DeleteIcon";
 
 export default function DeletePlayerModal({ currentPlayer }: any) {
   const dispatch = useDispatch();
@@ -101,28 +102,31 @@ export default function DeletePlayerModal({ currentPlayer }: any) {
   return (
     <>
       <Dialog>
-        <DialogTrigger>Delete Player</DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
+        <DialogTrigger className="flex gap-2">
+          <DeleteIcon />
+          Delete Player
+        </DialogTrigger>
+        <DialogContent className="w-[379px] h-[186px] bg-neutral-light border-none shadow-custom rounded-md">
+          <DialogHeader className=" items-start gap-8">
             <DialogTitle>Are you sure?</DialogTitle>
             <DialogDescription>This action cannot be undone.</DialogDescription>
           </DialogHeader>
-          <DialogFooter>
+          <DialogFooter className="flex flex-row items-center justify-end mt-5 gap-2">
             <DialogClose asChild>
               <Button
                 type="button"
-                variant="secondary"
+                variant="outline"
               >
                 cancel
               </Button>
             </DialogClose>
             <DialogClose asChild>
               <Button
-                variant="secondary"
-                type="submit"
+                variant="destructive"
+                type="button"
                 onMouseDown={handleDelete}
               >
-                close
+                Delete
               </Button>
             </DialogClose>
           </DialogFooter>

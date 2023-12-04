@@ -6,7 +6,7 @@ export default function PlayerDot({
   player,
   handlePlayerDotClick,
 }: {
-  className: string;
+  className?: string;
   player: PlayerStats;
   handlePlayerDotClick: Function;
 }) {
@@ -15,21 +15,24 @@ export default function PlayerDot({
   // }, []);
   return (
     <div
-      onClick={() => {
-        handlePlayerDotClick(player);
-      }}
       className={
         className +
-        `${
-          player["Position"] === "Goalkeeper"
-            ? " bg-yellow-500 py-1"
-            : " bg-black outline outline-2 outline-white px-2 py-1"
-        }`
+        " flex flex-col items-center justify-center gap-2 lg:text-xs xl:text-sm text-white font-bold text-center"
       }
     >
-      <h1 className="text-white font-bold text-center">
-        {player["Jersey Number"]}
-      </h1>
+      <div
+        onClick={() => {
+          handlePlayerDotClick(player);
+        }}
+        className={`cursor-pointer lg:px-1 lg:py-1.5 lg:w-[28px] lg:h-[28px] xl:w-[32px] xl:h-[32px] rounded-full lg:ml-1 xl:ml-0 ${
+          player["Position"] === "Goalkeeper"
+            ? " bg-primary-orange"
+            : " bg-black outline outline-2 outline-white xl:p-1.5"
+        }`}
+      >
+        <h1>{player["Jersey Number"]}</h1>
+      </div>
+      <h1 className="font-normal">{player["Player Name"]}</h1>
     </div>
   );
 }
