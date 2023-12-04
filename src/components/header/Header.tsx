@@ -30,8 +30,8 @@ export default function Header({ rosterData, mutateSearch, search }: Props) {
         <p className="text-primary-orange text-xs">Roster Details</p>
         <TeamNameInput rosterData={rosterData} />
       </div>
-      <div className="flex gap-2">
-        <div className="lg:w-[260px] lg:h-[36px] xl:w-fit xl:h-[44px] text-sm flex px-4 py-2 items-center rounded-md border">
+      <div className="lg:w-[260px] lg:h-[36px] xl:w-[388px] h-[44px] flex justify-end gap-2">
+        <div className="text-sm flex px-4 py-2 items-center rounded-md border">
           <Search />
           <input
             ref={searchRef}
@@ -39,7 +39,7 @@ export default function Header({ rosterData, mutateSearch, search }: Props) {
             name="search"
             id="search"
             placeholder="Find Player"
-            className=" pl-3 border-none bg-transparent focus:outline-transparent focus:bg-transparent"
+            className="pl-3 h-full border-none bg-transparent focus:outline-transparent focus:bg-transparent"
             onKeyDownCapture={handleKeyDown}
             onChange={(e) => {
               setSearchString(e.target.value);

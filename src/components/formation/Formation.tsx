@@ -101,22 +101,22 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
                 </div>
               </div>
             </div>
-            <div className="lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] text-white rounded-sm p-6">
+            <div className="lg:min-w-[290px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] text-white rounded-sm p-6">
               <div
                 style={{
                   backgroundImage: `url(${showPlayer["Player Image"]})`,
                   backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  width: "100%",
+                  backgroundPosition: "top",
+                  width: "90%",
                   height: "75%",
                 }}
                 className="w-full h-3/4 flex flex-col justify-between"
               >
-                <div className="relative w-[44px] h-[109px] mt-6">
+                <div className="relative w-[44px] h-[109px] mt-10">
                   <h1 className="relative text-[40px] text-primary-orange font-semibold z-[50]">
                     {showPlayer["Jersey Number"]}
                   </h1>
-                  <h1 className="absolute top-0 left-0 text-[109px] text-[#3A3731] font-semibold transform lg:translate-y-[-2px] xl:translate-y-[-5px] xl:translate-x-[-6px] z-0">
+                  <h1 className="absolute top-0 left-0 text-[109px] text-[#3A3731] font-semibold transform lg:translate-y-[-2px] xl:translate-y-[5px] xl:translate-x-[-6px] z-0">
                     {showPlayer["Jersey Number"]}
                   </h1>
                 </div>

@@ -148,12 +148,9 @@ export default function ImportTeamModal({
     <Dialog>
       <DialogTrigger asChild>
         <Button
+          size={"sm"}
           variant={header ? "default" : "simple"}
-          className={`lg:text-xs xl:text-sm ${
-            header
-              ? "lg:max-h-[36px] xl:max-h-[44px] xl:w-fit"
-              : " text-primary-orange"
-          }`}
+          className={`${header ? "" : " text-primary-orange"}`}
         >
           {header && rosterData.players.length > 0
             ? "Re-import Team"
