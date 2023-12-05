@@ -184,7 +184,7 @@ export default function EditPlayerModal({
                   name="playerName"
                   id="playerName"
                   className="col-span-3 w-[274px]"
-                  defaultValue={currentPlayer["player_name"]}
+                  defaultValue={mutatedPlayerData.playerName}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
                       return {
@@ -207,7 +207,7 @@ export default function EditPlayerModal({
                   name="jerseyNumber"
                   type="number"
                   className="col-span-3"
-                  defaultValue={currentPlayer["jersey_number"]}
+                  defaultValue={mutatedPlayerData.jersey}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
                       return {
@@ -232,7 +232,7 @@ export default function EditPlayerModal({
                   name="height"
                   type="number"
                   className="col-span-3"
-                  defaultValue={currentPlayer["height"]}
+                  defaultValue={mutatedPlayerData.height}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
                       return {
@@ -254,7 +254,7 @@ export default function EditPlayerModal({
                   id="weight"
                   name="weight"
                   className="col-span-3"
-                  defaultValue={currentPlayer["weight"]}
+                  defaultValue={mutatedPlayerData.weight}
                   onChange={(e) => {
                     setMutatedPlayerData((prev: EditableData) => {
                       return {
@@ -286,7 +286,7 @@ export default function EditPlayerModal({
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder={currentPlayer["nationality"]} />
+                    <SelectValue placeholder={mutatedPlayerData.nationality} />
                   </SelectTrigger>
                   <SelectContent>
                     {nations.map((nation: string, key: number) => {
