@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMetadata } from "@/store/metadataSlice";
 import { addPlayersData, addStarters } from "@/store/rosterSlice";
-import { PlayerStats, Starters } from "@/types/shared.types";
+import { PlayerStats } from "@/types/shared.types";
 import { RootState } from "@/store/store";
 import toast from "react-hot-toast";
 
@@ -42,37 +42,10 @@ export default function ImportTeamModal({
   const dispatch = useDispatch();
   const rosterData = useSelector((state: RootState) => state.rosterData);
 
-  function dispatchFileSummary(result: RawCsvData): void {
-    let g = 0,
-      d = 0,
-      m = 0,
-      f = 0,
-      s = 0,
-      total = result.data.length;
-    result.data.forEach((data: PlayerStats) => {
-      if (data["starter"] === "Yes") s++;
-      if (data["position"] === "Goalkeeper") g++;
-      if (data["position"] === "Defender") d++;
-      if (data["position"] === "Midfielder") m++;
-      if (data["position"] === "Forward") f++;
-    });
-    dispatch(
-      addMetadata({
-        data: {
-          defenders: d,
-          goalkeepers: g,
-          midfielders: m,
-          forwards: f,
-          starters: s,
-          total: total,
-        },
-      })
-    );
-  }
-
   function toSnakeCase(str: string) {
     return str.replace(/\s+/g, "_").toLowerCase();
   }
+
   function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     const files = e.target.files;
@@ -100,12 +73,13 @@ export default function ImportTeamModal({
                     processedRow[snakeCaseKey] = lowercasedValue;
                   }
                 }
+                // add a unique key in the data for RUD operations
                 processedRow["uniqueKey"] = index.toString();
                 return processedRow;
               }
             );
             result.data = lowerCasedData;
-            dispatchFileSummary(result);
+            dispatch(addMetadata(result));
             setPlayers(result);
           } catch (error) {
             console.error(error);
@@ -119,33 +93,7 @@ export default function ImportTeamModal({
   function handleImportConfirm(): void {
     if (players) {
       dispatch(addPlayersData(players));
-      let starters = {
-        goalkeeper: [],
-        defenders: [],
-        midfielders: [],
-        forwards: [],
-      } as Starters;
-      players.data.forEach((player: PlayerStats) => {
-        if (player["starter"] === "Yes") {
-          switch (player["position"]) {
-            case "Goalkeeper":
-              starters.goalkeeper.push(player);
-              break;
-            case "Defender":
-              starters.defenders.push(player);
-              break;
-            case "Midfielder":
-              starters.midfielders.push(player);
-              break;
-            case "Forward":
-              starters.forwards.push(player);
-              break;
-            default:
-              break;
-          }
-        }
-      });
-      dispatch(addStarters(starters));
+      dispatch(addStarters(players));
     } else {
       toast.error("No file selected");
     }

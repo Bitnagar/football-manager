@@ -1,12 +1,12 @@
-import { PlayerStats, RosterData } from "@/types/shared.types";
+import { PlayerStats, RosterData, Starters } from "@/types/shared.types";
 import { createSlice } from "@reduxjs/toolkit";
 
 const rosterSlice = createSlice({
   name: "rosterData",
   initialState: {
     team: "My Team",
-    players: [] as PlayerStats[],
-    fields: [] as string[],
+    players: [],
+    fields: [],
     starters: [],
   } as unknown as RosterData,
   reducers: {
@@ -23,11 +23,65 @@ const rosterSlice = createSlice({
 
     // add starter players to state
     addStarters(state, action) {
-      state.starters = action.payload;
+      let starters = {
+        goalkeeper: [],
+        defenders: [],
+        midfielders: [],
+        forwards: [],
+      } as Starters;
+      action.payload.data.forEach((player: PlayerStats) => {
+        if (player["starter"] === "Yes") {
+          switch (player["position"]) {
+            case "Goalkeeper":
+              starters.goalkeeper.push(player);
+              break;
+            case "Defender":
+              starters.defenders.push(player);
+              break;
+            case "Midfielder":
+              starters.midfielders.push(player);
+              break;
+            case "Forward":
+              starters.forwards.push(player);
+              break;
+            default:
+              break;
+          }
+        }
+      });
+      state.starters = starters;
     },
 
+    // edit starters
     editStarters(state, action) {
-      state.starters = action.payload;
+      let starters = {
+        goalkeeper: [],
+        defenders: [],
+        midfielders: [],
+        forwards: [],
+      } as Starters;
+      action.payload.forEach((player: PlayerStats) => {
+        if (player["starter"] === "Yes") {
+          switch (player["position"]) {
+            case "Goalkeeper":
+              starters.goalkeeper.push(player);
+              break;
+            case "Defender":
+              starters.defenders.push(player);
+              break;
+            case "Midfielder":
+              starters.midfielders.push(player);
+              break;
+            case "Forward":
+              starters.forwards.push(player);
+              break;
+
+            default:
+              break;
+          }
+        }
+      });
+      state.starters = starters;
     },
 
     editPlayerData(state, action) {
@@ -49,7 +103,7 @@ const rosterSlice = createSlice({
         (player: PlayerStats) =>
           player["uniqueKey"] === action.payload.uniqueKey
       ) as number;
-      state.players?.splice(currentPlayerIndex, 1);
+      state.players.splice(currentPlayerIndex, 1);
     },
   },
 });

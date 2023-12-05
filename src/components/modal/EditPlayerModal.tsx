@@ -24,7 +24,7 @@ import { useDispatch } from "react-redux";
 import nations from "@/lib/nationalities.json";
 import { editMetadata } from "@/store/metadataSlice";
 import store, { RootState } from "@/store/store";
-import { PlayerStats, Starters } from "@/types/shared.types";
+import { PlayerStats } from "@/types/shared.types";
 import EditPenSvg from "../ui/EditPenSvg";
 import { DialogClose } from "@radix-ui/react-dialog";
 import toast from "react-hot-toast";
@@ -66,8 +66,6 @@ export default function EditPlayerModal({
 
   // handle player edit
   function handleEdit(e: React.MouseEvent<HTMLButtonElement>) {
-    console.log(mutatedPlayerData);
-
     e.preventDefault();
     if (Object.values(mutatedPlayerData).includes("")) {
       toast.error("Failed to edit player. Make sure to fill all values.");
@@ -86,73 +84,13 @@ export default function EditPlayerModal({
           uniqueKey: uniqueKey,
         })
       );
-      let currentValue = select(store.getState());
-      dispatchFileSummary(currentValue);
-      dispatchStarters(currentValue);
+      let updatedState = select(store.getState());
+      dispatch(editMetadata(updatedState));
+      dispatch(editStarters(updatedState));
       toast.success("Player edited successfully.");
     }
   }
 
-  // dispatch starters array to reducer
-  function dispatchStarters(currentValue: PlayerStats[]) {
-    let starters = {
-      goalkeeper: [],
-      defenders: [],
-      midfielders: [],
-      forwards: [],
-    } as Starters;
-    currentValue.forEach((player: PlayerStats) => {
-      if (player["starter"] === "Yes") {
-        switch (player["position"]) {
-          case "Goalkeeper":
-            starters.goalkeeper.push(player);
-            break;
-          case "Defender":
-            starters.defenders.push(player);
-            break;
-          case "Midfielder":
-            starters.midfielders.push(player);
-            break;
-          case "Forward":
-            starters.forwards.push(player);
-            break;
-
-          default:
-            break;
-        }
-      }
-    });
-    dispatch(editStarters(starters));
-  }
-
-  // dispatch file summary after editing the state.
-  function dispatchFileSummary(updatedPlayers: PlayerStats[]): void {
-    let g = 0,
-      d = 0,
-      m = 0,
-      f = 0,
-      s = 0,
-      total = updatedPlayers.length;
-    updatedPlayers.forEach((Player: PlayerStats) => {
-      if (Player["starter"] === "Yes") s++;
-      if (Player["position"] === "Goalkeeper") g++;
-      if (Player["position"] === "Defender") d++;
-      if (Player["position"] === "Midfielder") m++;
-      if (Player["position"] === "Forward") f++;
-    });
-    dispatch(
-      editMetadata({
-        data: {
-          defenders: d,
-          goalkeepers: g,
-          midfielders: m,
-          forwards: f,
-          starters: s,
-          total: total,
-        },
-      })
-    );
-  }
   return (
     <>
       <Dialog>

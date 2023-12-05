@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { deletePlayerData, editStarters } from "@/store/rosterSlice";
-import { PlayerStats, Starters } from "@/types/shared.types";
+import { PlayerStats } from "@/types/shared.types";
 import store, { RootState } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { editMetadata } from "@/store/metadataSlice";
@@ -31,34 +31,6 @@ export default function DeletePlayerModal({
     return state.rosterData.players;
   }
 
-  function dispatchFileSummary(updatedPlayers: PlayerStats[]): void {
-    let g = 0,
-      d = 0,
-      m = 0,
-      f = 0,
-      s = 0,
-      total = updatedPlayers.length;
-    updatedPlayers.forEach((Player: PlayerStats) => {
-      if (Player["starter"] === "Yes") s++;
-      if (Player["position"] === "Goalkeeper") g++;
-      if (Player["position"] === "Defender") d++;
-      if (Player["position"] === "Midfielder") m++;
-      if (Player["position"] === "Forward") f++;
-    });
-    dispatch(
-      editMetadata({
-        data: {
-          defenders: d,
-          goalkeepers: g,
-          midfielders: m,
-          forwards: f,
-          starters: s,
-          total: total,
-        },
-      })
-    );
-  }
-
   function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     dispatch(
@@ -67,36 +39,9 @@ export default function DeletePlayerModal({
         currentPlayer: currentPlayer,
       })
     );
-    let updatedPlayers = select(store.getState());
-    dispatchFileSummary(updatedPlayers);
-    let starters = {
-      goalkeeper: [],
-      defenders: [],
-      midfielders: [],
-      forwards: [],
-    } as Starters;
-    updatedPlayers.forEach((player: PlayerStats) => {
-      if (player["starter"] === "Yes") {
-        switch (player["position"]) {
-          case "Goalkeeper":
-            starters.goalkeeper.push(player);
-            break;
-          case "Defender":
-            starters.defenders.push(player);
-            break;
-          case "Midfielder":
-            starters.midfielders.push(player);
-            break;
-          case "Forward":
-            starters.forwards.push(player);
-            break;
-
-          default:
-            break;
-        }
-      }
-    });
-    dispatch(editStarters(starters));
+    let updatedState = select(store.getState());
+    dispatch(editMetadata(updatedState));
+    dispatch(editStarters(updatedState));
     toast.success("Player deleted successfully.");
   }
 
