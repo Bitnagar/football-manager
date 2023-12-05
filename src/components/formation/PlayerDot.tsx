@@ -1,5 +1,6 @@
 import { PlayerStats } from "@/types/shared.types";
 
+// Player dots over field on formation screen.
 export default function PlayerDot({
   className,
   player,
@@ -21,14 +22,14 @@ export default function PlayerDot({
           handlePlayerDotClick(player);
         }}
         className={`cursor-pointer lg:px-1 lg:py-1.5 lg:w-[28px] lg:h-[28px] xl:w-[32px] xl:h-[32px] rounded-full lg:ml-1 xl:ml-0 ${
-          player["Position"] === "Goalkeeper"
+          player["position"] === "Goalkeeper"
             ? " bg-primary-orange"
             : " bg-black outline outline-2 outline-white xl:p-1.5"
         }`}
       >
-        <h1>{player["Jersey Number"]}</h1>
+        <h1>{player["jersey_number"]}</h1>
       </div>
-      <h1 className="font-normal">{player["Player Name"]}</h1>
+      <h1 className="font-normal min-w-min">{player["player_name"]}</h1>
     </div>
   );
 }

@@ -46,25 +46,28 @@ export default function EditPlayerModal({
   currentPlayer: PlayerStats;
 }) {
   const dispatch = useDispatch();
-  const uniqueKey = currentPlayer["Player Image"];
+  const uniqueKey = currentPlayer["uniqueKey"];
 
   // state
   const [mutatedPlayerData, setMutatedPlayerData] = useState<EditableData>({
-    yes: currentPlayer["Starter"] === "Yes",
-    no: currentPlayer["Starter"] === "No",
-    playerName: currentPlayer["Player Name"],
-    jersey: currentPlayer["Jersey Number"],
-    height: currentPlayer["Height"],
-    weight: currentPlayer["Weight"],
-    nationality: currentPlayer["Nationality"],
-    position: currentPlayer["Position"],
+    yes: currentPlayer["starter"] === "Yes",
+    no: currentPlayer["starter"] === "No",
+    playerName: currentPlayer["player_name"],
+    jersey: currentPlayer["jersey_number"],
+    height: currentPlayer["height"],
+    weight: currentPlayer["weight"],
+    nationality: currentPlayer["nationality"],
+    position: currentPlayer["position"],
   });
 
   function select(state: RootState): PlayerStats[] {
     return state.rosterData.players;
   }
 
+  // handle player edit
   function handleEdit(e: React.MouseEvent<HTMLButtonElement>) {
+    console.log(mutatedPlayerData);
+
     e.preventDefault();
     if (Object.values(mutatedPlayerData).includes("")) {
       toast.error("Failed to edit player. Make sure to fill all values.");
@@ -90,6 +93,7 @@ export default function EditPlayerModal({
     }
   }
 
+  // dispatch starters array to reducer
   function dispatchStarters(currentValue: PlayerStats[]) {
     let starters = {
       goalkeeper: [],
@@ -98,8 +102,8 @@ export default function EditPlayerModal({
       forwards: [],
     } as Starters;
     currentValue.forEach((player: PlayerStats) => {
-      if (player["Starter"] === "Yes") {
-        switch (player["Position"]) {
+      if (player["starter"] === "Yes") {
+        switch (player["position"]) {
           case "Goalkeeper":
             starters.goalkeeper.push(player);
             break;
@@ -121,6 +125,7 @@ export default function EditPlayerModal({
     dispatch(editStarters(starters));
   }
 
+  // dispatch file summary after editing the state.
   function dispatchFileSummary(updatedPlayers: PlayerStats[]): void {
     let g = 0,
       d = 0,
@@ -129,11 +134,11 @@ export default function EditPlayerModal({
       s = 0,
       total = updatedPlayers.length;
     updatedPlayers.forEach((Player: PlayerStats) => {
-      if (Player["Starter"] === "Yes") s++;
-      if (Player["Position"] === "Goalkeeper") g++;
-      if (Player["Position"] === "Defender") d++;
-      if (Player["Position"] === "Midfielder") m++;
-      if (Player["Position"] === "Forward") f++;
+      if (Player["starter"] === "Yes") s++;
+      if (Player["position"] === "Goalkeeper") g++;
+      if (Player["position"] === "Defender") d++;
+      if (Player["position"] === "Midfielder") m++;
+      if (Player["position"] === "Forward") f++;
     });
     dispatch(
       editMetadata({
@@ -179,7 +184,7 @@ export default function EditPlayerModal({
                   name="playerName"
                   id="playerName"
                   className="col-span-3 w-[274px]"
-                  defaultValue={currentPlayer["Player Name"]}
+                  defaultValue={currentPlayer["player_name"]}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
                       return {
@@ -202,7 +207,7 @@ export default function EditPlayerModal({
                   name="jerseyNumber"
                   type="number"
                   className="col-span-3"
-                  defaultValue={currentPlayer["Jersey Number"]}
+                  defaultValue={currentPlayer["jersey_number"]}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
                       return {
@@ -227,7 +232,7 @@ export default function EditPlayerModal({
                   name="height"
                   type="number"
                   className="col-span-3"
-                  defaultValue={currentPlayer["Height"]}
+                  defaultValue={currentPlayer["height"]}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
                       return {
@@ -249,7 +254,7 @@ export default function EditPlayerModal({
                   id="weight"
                   name="weight"
                   className="col-span-3"
-                  defaultValue={currentPlayer["Weight"]}
+                  defaultValue={currentPlayer["weight"]}
                   onChange={(e) => {
                     setMutatedPlayerData((prev: EditableData) => {
                       return {
@@ -281,7 +286,7 @@ export default function EditPlayerModal({
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder={currentPlayer["Nationality"]} />
+                    <SelectValue placeholder={currentPlayer["nationality"]} />
                   </SelectTrigger>
                   <SelectContent>
                     {nations.map((nation: string, key: number) => {

@@ -26,20 +26,12 @@ export default function InvalidDataModal({
                 priority={true}
               />
             </div>
-            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-background text-white rounded-sm p-6">
-              <div className=" w-full h-3/4">
-                <div>
-                  <h1></h1>
-                </div>
-                <div></div>
-                <div></div>
-              </div>
-              <hr />
-              <div className="w-full h-1/4"></div>
+            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col justify-end bg-background text-white rounded-sm p-6">
+              <hr className="mb-32" />
             </div>
           </div>
         </div>
-        <div className="absolute  w-full h-full  text-white text-center  flex items-center justify-center rounded-md">
+        <div className="absolute w-full h-full text-white text-center flex items-center justify-center rounded-md">
           <div className="w-[389px] h-[127px] flex flex-col items-center justify-center bg-neutral-light shadow-custom p-6 rounded-lg ">
             <div>
               <h1>⚠️ No player data found</h1>
@@ -71,7 +63,7 @@ export default function InvalidDataModal({
                 priority={true}
               />
             </div>
-            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-background rounded-sm p-6">
+            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col justify-end  bg-background rounded-sm p-6">
               <div className=" w-full h-3/4">
                 <div>
                   <h1></h1>
@@ -79,7 +71,7 @@ export default function InvalidDataModal({
                 <div></div>
                 <div></div>
               </div>
-              <hr />
+              <hr className="mb-32" />
               <div className="w-full h-1/4"></div>
             </div>
           </div>
@@ -119,7 +111,7 @@ export default function InvalidDataModal({
                 priority={true}
               />
             </div>
-            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-background rounded-sm p-6">
+            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col justify-end  bg-background rounded-sm p-6">
               <div className=" w-full h-3/4">
                 <div>
                   <h1></h1>
@@ -127,7 +119,7 @@ export default function InvalidDataModal({
                 <div></div>
                 <div></div>
               </div>
-              <hr />
+              <hr className="mb-32" />
               <div className="w-full h-1/4"></div>
             </div>
           </div>

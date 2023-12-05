@@ -25,8 +25,7 @@ export default function DeletePlayerModal({
   const dispatch = useDispatch();
 
   // unique key for editing and deleting the player
-  // - Only Player Images were unique in csv file.
-  const uniqueKey = currentPlayer["Player Image"];
+  const uniqueKey = currentPlayer["uniqueKey"];
 
   function select(state: RootState): PlayerStats[] {
     return state.rosterData.players;
@@ -40,11 +39,11 @@ export default function DeletePlayerModal({
       s = 0,
       total = updatedPlayers.length;
     updatedPlayers.forEach((Player: PlayerStats) => {
-      if (Player["Starter"] === "Yes") s++;
-      if (Player["Position"] === "Goalkeeper") g++;
-      if (Player["Position"] === "Defender") d++;
-      if (Player["Position"] === "Midfielder") m++;
-      if (Player["Position"] === "Forward") f++;
+      if (Player["starter"] === "Yes") s++;
+      if (Player["position"] === "Goalkeeper") g++;
+      if (Player["position"] === "Defender") d++;
+      if (Player["position"] === "Midfielder") m++;
+      if (Player["position"] === "Forward") f++;
     });
     dispatch(
       editMetadata({
@@ -77,8 +76,8 @@ export default function DeletePlayerModal({
       forwards: [],
     } as Starters;
     updatedPlayers.forEach((player: PlayerStats) => {
-      if (player["Starter"] === "Yes") {
-        switch (player["Position"]) {
+      if (player["starter"] === "Yes") {
+        switch (player["position"]) {
           case "Goalkeeper":
             starters.goalkeeper.push(player);
             break;

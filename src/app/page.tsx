@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import ImportTeamModal from "@/components/modal/ImportTeamModal";
 import { useSelector } from "react-redux";
@@ -83,27 +82,27 @@ export default function Home() {
                       >
                         <td className="flex items-center w-56 h-fit gap-2 text-sm">
                           <Image
-                            src={player["Flag Image"]}
-                            alt={player["Nationality"]}
+                            src={player["flag_image"]}
+                            alt={player["nationality"]}
                             width={24}
                             height={24}
                           />
-                          <p>{player["Player Name"]}</p>
+                          <p>{player["player_name"]}</p>
                         </td>
-                        <td className="w-56">{player["Jersey Number"]}</td>
-                        <td className="w-56">{player["Position"]}</td>
+                        <td className="w-56">{player["jersey_number"]}</td>
+                        <td className="w-56">{player["position"]}</td>
                         <td className="w-56">
-                          {parseInt(player["Height"]) / 100} m
+                          {parseInt(player["height"]) / 100} m
                         </td>
                         <td className="w-56">
-                          {player["Weight"] === "Unknown"
-                            ? player["Weight"]
-                            : player["Weight"] + " kg"}
+                          {player["weight"] === "Unknown"
+                            ? player["weight"]
+                            : player["weight"] + " kg"}
                         </td>
-                        <td className="w-56">{player["Nationality"]}</td>
-                        <td className="w-56">{player["Starter"]}</td>
-                        <td className="w-56">{player["Appearances"]}</td>
-                        <td className="w-56">{player["Minutes Played"]}</td>
+                        <td className="w-56">{player["nationality"]}</td>
+                        <td className="w-56">{player["starter"]}</td>
+                        <td className="w-56">{player["appearances"]}</td>
+                        <td className="w-56">{player["minutes_played"]}</td>
                         <td>
                           <EditPlayerModal currentPlayer={player} />
                         </td>
@@ -115,8 +114,8 @@ export default function Home() {
                   rosterData.players.length > 0 &&
                   rosterData.players.map((player: PlayerStats, key: number) => {
                     if (
-                      player["Player Name"].includes(search) ||
-                      player["Position"].includes(search)
+                      player["player_name"].includes(search) ||
+                      player["position"].includes(search)
                     ) {
                       return (
                         <tr
@@ -125,27 +124,27 @@ export default function Home() {
                         >
                           <td className="flex items-center w-56 h-fit gap-2 text-sm">
                             <Image
-                              src={player["Flag Image"]}
-                              alt={player["Nationality"]}
+                              src={player["flag_image"]}
+                              alt={player["nationality"]}
                               width={24}
                               height={24}
                             />
-                            <p>{player["Player Name"]}</p>
+                            <p>{player["player_name"]}</p>
                           </td>
-                          <td className="w-56">{player["Jersey Number"]}</td>
-                          <td className="w-56">{player["Position"]}</td>
+                          <td className="w-56">{player["jersey_number"]}</td>
+                          <td className="w-56">{player["position"]}</td>
                           <td className="w-56">
-                            {parseInt(player["Height"]) / 100} m
+                            {parseInt(player["height"]) / 100} m
                           </td>
                           <td className="w-56">
-                            {player["Weight"] === "Unknown"
-                              ? player["Weight"]
-                              : player["Weight"] + " kg"}
+                            {player["weight"] === "Unknown"
+                              ? player["weight"]
+                              : player["weight"] + " kg"}
                           </td>
-                          <td className="w-56">{player["Nationality"]}</td>
-                          <td className="w-56">{player["Starter"]}</td>
-                          <td className="w-56">{player["Appearances"]}</td>
-                          <td className="w-56">{player["Minutes Played"]}</td>
+                          <td className="w-56">{player["nationality"]}</td>
+                          <td className="w-56">{player["starter"]}</td>
+                          <td className="w-56">{player["appearances"]}</td>
+                          <td className="w-56">{player["minutes_played"]}</td>
                           <td>
                             <EditPlayerModal currentPlayer={player} />
                           </td>

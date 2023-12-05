@@ -18,6 +18,7 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
     setShowPlayer(player);
   }
 
+  // confirming 4-3-3 position
   if (
     rosterData.starters.goalkeeper.length === MAX_Goalkeeper &&
     rosterData.starters.defenders.length === MAX_Defenders &&
@@ -100,7 +101,7 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
             <div className="lg:min-w-[320px] lg:h-[422px] xl:min-w-[400px] xl:h-[541px] lg:text-xs xl:text-sm flex flex-col bg-background text-white rounded-sm p-6">
               <div
                 style={{
-                  backgroundImage: `url(${showPlayer["Player Image"]})`,
+                  backgroundImage: `url(${showPlayer["player_image"]})`,
                   backgroundSize: "cover",
                   backgroundPosition: "top",
                   width: "90%",
@@ -110,42 +111,42 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
               >
                 <div className="relative w-[44px] h-[109px] mt-10">
                   <h1 className="relative text-[40px] text-primary-orange font-semibold z-[50]">
-                    {showPlayer["Jersey Number"]}
+                    {showPlayer["jersey_number"]}
                   </h1>
                   <h1 className="absolute top-0 left-0 text-[109px] text-text-shadow font-semibold transform lg:translate-y-[-2px] xl:translate-y-[5px] xl:translate-x-[-6px] z-0">
-                    {showPlayer["Jersey Number"]}
+                    {showPlayer["jersey_number"]}
                   </h1>
                 </div>
                 <div className="flex flex-col gap-5 lg:mb-4 xl:mb-6 w-full">
                   <div>
                     <h1 className="text-2xl font-normal">
-                      {showPlayer["Player Name"]}
+                      {showPlayer["player_name"]}
                     </h1>
                     <h1 className="text-primary-orange">
-                      {showPlayer["Position"]}
+                      {showPlayer["position"]}
                     </h1>
                   </div>
                   <div className="flex gap-8">
                     <div>
                       <h1 className="mb-2">Height</h1>
-                      <h1>{parseInt(showPlayer["Height"]) / 100} m</h1>
+                      <h1>{parseInt(showPlayer["height"]) / 100} m</h1>
                     </div>
                     <div>
                       <h1 className="mb-2">Weight</h1>
-                      <h1>{showPlayer["Weight"]} kg</h1>
+                      <h1>{showPlayer["weight"]} kg</h1>
                     </div>
                     <div className="w-fit">
                       <h1 className="mb-2">Nationality</h1>
                       <div className="w-full flex items-center gap-2">
                         <img
-                          src={showPlayer["Flag Image"]}
-                          alt={showPlayer["Nationality"]}
+                          src={showPlayer["flag_image"]}
+                          alt={showPlayer["nationality"]}
                           width={16}
                           height={16}
                           className="w-4 h-4"
                         />
                         <h1 className="min-w-fit">
-                          {showPlayer["Nationality"]}
+                          {showPlayer["nationality"]}
                         </h1>
                       </div>
                     </div>
@@ -157,21 +158,21 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
                 <div className="flex flex-col gap-4">
                   <div>
                     <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
-                      {showPlayer["Appearances"]}
+                      {showPlayer["appearances"]}
                     </h1>
                     <h1>Appearances</h1>
                   </div>
-                  {showPlayer["Position"] === "Goalkeeper" ? (
+                  {showPlayer["position"] === "Goalkeeper" ? (
                     <div>
                       <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
-                        {showPlayer["Clean Sheets"]}
+                        {showPlayer["clean_sheets"]}
                       </h1>
                       <h1>Clean Sheets</h1>
                     </div>
                   ) : (
                     <div>
                       <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
-                        {showPlayer["Goals "]}
+                        {showPlayer["goals_"]}
                       </h1>
                       <h1>Goals</h1>
                     </div>
@@ -180,21 +181,21 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
                 <div className="flex flex-col gap-4">
                   <div>
                     <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
-                      {showPlayer["Minutes Played"]}
+                      {showPlayer["minutes_played"]}
                     </h1>
                     <h1>Minutes Played</h1>
                   </div>
-                  {showPlayer["Position"] === "Goalkeeper" ? (
+                  {showPlayer["position"] === "Goalkeeper" ? (
                     <div>
                       <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
-                        {showPlayer["Saves"]}
+                        {showPlayer["saves"]}
                       </h1>
                       <h1>Saves</h1>
                     </div>
                   ) : (
                     <div>
                       <h1 className="text-primary-orange lg:text-sm xl:text-2xl font-semibold">
-                        {showPlayer["Assists"]}
+                        {showPlayer["assists"]}
                       </h1>
                       <h1>Assists</h1>
                     </div>
