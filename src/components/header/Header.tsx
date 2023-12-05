@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 
 type Props = {
   rosterData: RosterData;
-  mutateSearch: any;
+  mutateSearch: (string: string) => void;
   search: string | undefined;
 };
 

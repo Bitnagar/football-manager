@@ -16,10 +16,6 @@ export default function ActionsMenu({
 }: {
   currentPlayer: PlayerStats;
 }) {
-  // useEffect(() => {
-  //   console.log("editPlayermodal rendered");
-  // });
-
   return (
     <Menubar className="bg-transparent w-[24px] h-[24px]">
       <MenubarMenu>

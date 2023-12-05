@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 
 const EditPenSvg = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>(
-  function svgicon(props, ref) {
+  function Svgicon(props, ref) {
     return (
       <svg
         {...props}

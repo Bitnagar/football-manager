@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { editPlayerData, editStarters } from "@/store/rosterSlice";
 import { useDispatch } from "react-redux";
 import nations from "@/lib/nationalities.json";
@@ -40,33 +40,36 @@ type EditableData = {
   position: "Goalkeeper" | "Defender" | "Midfielder" | "Forward";
 };
 
-export default function EditPlayerModal({ currentPlayer }: any) {
+export default function EditPlayerModal({
+  currentPlayer,
+}: {
+  currentPlayer: PlayerStats;
+}) {
   const dispatch = useDispatch();
-  const uniqueKey = currentPlayer["Player Image"];
+  const uniqueKey = currentPlayer["uniqueKey"];
 
   // state
   const [mutatedPlayerData, setMutatedPlayerData] = useState<EditableData>({
-    yes: currentPlayer["Starter"] === "Yes",
-    no: currentPlayer["Starter"] === "No",
-    playerName: currentPlayer["Player Name"],
-    jersey: currentPlayer["Jersey Number"],
-    height: currentPlayer["Height"],
-    weight: currentPlayer["Weight"],
-    nationality: currentPlayer["Nationality"],
-    position: currentPlayer["Position"],
+    yes: currentPlayer["starter"] === "Yes",
+    no: currentPlayer["starter"] === "No",
+    playerName: currentPlayer["player_name"],
+    jersey: currentPlayer["jersey_number"],
+    height: currentPlayer["height"],
+    weight: currentPlayer["weight"],
+    nationality: currentPlayer["nationality"],
+    position: currentPlayer["position"],
   });
 
   function select(state: RootState): PlayerStats[] {
     return state.rosterData.players;
   }
 
+  // handle player edit
   function handleEdit(e: React.MouseEvent<HTMLButtonElement>) {
+    console.log(mutatedPlayerData);
+
     e.preventDefault();
     if (Object.values(mutatedPlayerData).includes("")) {
-      // toast({
-      //   title: "Values missing!",
-      //   description: "Please make sure to fill all the values",
-      // });
       toast.error("Failed to edit player. Make sure to fill all values.");
       return;
     } else {
@@ -85,38 +88,44 @@ export default function EditPlayerModal({ currentPlayer }: any) {
       );
       let currentValue = select(store.getState());
       dispatchFileSummary(currentValue);
-      let starters = {
-        goalkeeper: [],
-        defenders: [],
-        midfielders: [],
-        forwards: [],
-      } as Starters;
-      currentValue.forEach((player: PlayerStats) => {
-        if (player["Starter"] === "Yes") {
-          switch (player["Position"]) {
-            case "Goalkeeper":
-              starters.goalkeeper.push(player);
-              break;
-            case "Defender":
-              starters.defenders.push(player);
-              break;
-            case "Midfielder":
-              starters.midfielders.push(player);
-              break;
-            case "Forward":
-              starters.forwards.push(player);
-              break;
-
-            default:
-              break;
-          }
-        }
-      });
-      dispatch(editStarters(starters));
+      dispatchStarters(currentValue);
       toast.success("Player edited successfully.");
     }
   }
 
+  // dispatch starters array to reducer
+  function dispatchStarters(currentValue: PlayerStats[]) {
+    let starters = {
+      goalkeeper: [],
+      defenders: [],
+      midfielders: [],
+      forwards: [],
+    } as Starters;
+    currentValue.forEach((player: PlayerStats) => {
+      if (player["starter"] === "Yes") {
+        switch (player["position"]) {
+          case "Goalkeeper":
+            starters.goalkeeper.push(player);
+            break;
+          case "Defender":
+            starters.defenders.push(player);
+            break;
+          case "Midfielder":
+            starters.midfielders.push(player);
+            break;
+          case "Forward":
+            starters.forwards.push(player);
+            break;
+
+          default:
+            break;
+        }
+      }
+    });
+    dispatch(editStarters(starters));
+  }
+
+  // dispatch file summary after editing the state.
   function dispatchFileSummary(updatedPlayers: PlayerStats[]): void {
     let g = 0,
       d = 0,
@@ -125,11 +134,11 @@ export default function EditPlayerModal({ currentPlayer }: any) {
       s = 0,
       total = updatedPlayers.length;
     updatedPlayers.forEach((Player: PlayerStats) => {
-      if (Player["Starter"] === "Yes") s++;
-      if (Player["Position"] === "Goalkeeper") g++;
-      if (Player["Position"] === "Defender") d++;
-      if (Player["Position"] === "Midfielder") m++;
-      if (Player["Position"] === "Forward") f++;
+      if (Player["starter"] === "Yes") s++;
+      if (Player["position"] === "Goalkeeper") g++;
+      if (Player["position"] === "Defender") d++;
+      if (Player["position"] === "Midfielder") m++;
+      if (Player["position"] === "Forward") f++;
     });
     dispatch(
       editMetadata({
@@ -165,10 +174,17 @@ export default function EditPlayerModal({ currentPlayer }: any) {
           <div className="grid gap-4 py-4">
             <div className="flex w-full items-center justify-between gap-4 lg:mb-2 xl:mb-4">
               <div className="flex flex-col gap-2 ">
-                <Label className=" self-start">Player Name</Label>
+                <Label
+                  htmlFor="playerName"
+                  className=" self-start"
+                >
+                  Player Name
+                </Label>
                 <Input
+                  name="playerName"
+                  id="playerName"
                   className="col-span-3 w-[274px]"
-                  defaultValue={currentPlayer["Player Name"]}
+                  defaultValue={mutatedPlayerData.playerName}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
                       return {
@@ -180,11 +196,18 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                 />
               </div>
               <div className="flex flex-col gap-2 ">
-                <Label className=" self-start">Jersey Number</Label>
+                <Label
+                  htmlFor="jerseyNumber"
+                  className=" self-start"
+                >
+                  Jersey Number
+                </Label>
                 <Input
+                  id="jerseyNumber"
+                  name="jerseyNumber"
                   type="number"
                   className="col-span-3"
-                  defaultValue={currentPlayer["Jersey Number"]}
+                  defaultValue={mutatedPlayerData.jersey}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
                       return {
@@ -198,11 +221,18 @@ export default function EditPlayerModal({ currentPlayer }: any) {
             </div>
             <div className="flex w-full items-center justify-between gap-4 lg:mb-2 xl:mb-4">
               <div className="flex flex-col gap-2 w-full">
-                <Label className=" self-start">Height</Label>
+                <Label
+                  htmlFor="height"
+                  className=" self-start"
+                >
+                  Height
+                </Label>
                 <Input
+                  id="height"
+                  name="height"
                   type="number"
                   className="col-span-3"
-                  defaultValue={currentPlayer["Height"]}
+                  defaultValue={mutatedPlayerData.height}
                   onChange={(e) => {
                     setMutatedPlayerData((prev) => {
                       return {
@@ -214,10 +244,17 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                 />
               </div>
               <div className="flex flex-col gap-2 w-full">
-                <Label className=" self-start">Weight</Label>
+                <Label
+                  htmlFor="weight"
+                  className=" self-start"
+                >
+                  Weight
+                </Label>
                 <Input
+                  id="weight"
+                  name="weight"
                   className="col-span-3"
-                  defaultValue={currentPlayer["Weight"]}
+                  defaultValue={mutatedPlayerData.weight}
                   onChange={(e) => {
                     setMutatedPlayerData((prev: EditableData) => {
                       return {
@@ -231,8 +268,14 @@ export default function EditPlayerModal({ currentPlayer }: any) {
             </div>
             <div className="flex w-full items-center justify-start gap-4 lg:mb-2 xl:mb-4">
               <div className="w-full flex flex-col gap-2">
-                <Label className=" self-start">Nationality</Label>
+                <Label
+                  htmlFor="nationality"
+                  className=" self-start"
+                >
+                  Nationality
+                </Label>
                 <Select
+                  name="nationality"
                   onValueChange={(e) => {
                     setMutatedPlayerData((prev: EditableData) => {
                       return {
@@ -243,7 +286,7 @@ export default function EditPlayerModal({ currentPlayer }: any) {
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder={currentPlayer["Nationality"]} />
+                    <SelectValue placeholder={mutatedPlayerData.nationality} />
                   </SelectTrigger>
                   <SelectContent>
                     {nations.map((nation: string, key: number) => {
@@ -262,8 +305,14 @@ export default function EditPlayerModal({ currentPlayer }: any) {
             </div>
             <div className="flex w-full items-center justify-start gap-4 lg:mb-2 xl:mb-4">
               <div className="w-full flex flex-col gap-2">
-                <Label className=" self-start">Position</Label>
+                <Label
+                  htmlFor="position"
+                  className=" self-start"
+                >
+                  Position
+                </Label>
                 <Select
+                  name="position"
                   onValueChange={(
                     e: "Goalkeeper" | "Defender" | "Midfielder" | "Forward"
                   ) => {

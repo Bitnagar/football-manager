@@ -1,4 +1,3 @@
-import { MenuIcon } from "lucide-react";
 import Image from "next/image";
 import FormationIcon from "../ui/Custom/icons/FormationIcon";
 import HamburgerIcon from "../ui/Custom/icons/HamburgerIcon";

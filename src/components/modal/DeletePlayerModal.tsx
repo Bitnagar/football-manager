@@ -17,12 +17,15 @@ import { editMetadata } from "@/store/metadataSlice";
 import DeleteIcon from "../ui/DeleteIcon";
 import toast from "react-hot-toast";
 
-export default function DeletePlayerModal({ currentPlayer }: any) {
+export default function DeletePlayerModal({
+  currentPlayer,
+}: {
+  currentPlayer: PlayerStats;
+}) {
   const dispatch = useDispatch();
 
   // unique key for editing and deleting the player
-  // - Only Player Images were unique in csv file.
-  const uniqueKey = currentPlayer["Player Image"];
+  const uniqueKey = currentPlayer["uniqueKey"];
 
   function select(state: RootState): PlayerStats[] {
     return state.rosterData.players;
@@ -36,11 +39,11 @@ export default function DeletePlayerModal({ currentPlayer }: any) {
       s = 0,
       total = updatedPlayers.length;
     updatedPlayers.forEach((Player: PlayerStats) => {
-      if (Player["Starter"] === "Yes") s++;
-      if (Player["Position"] === "Goalkeeper") g++;
-      if (Player["Position"] === "Defender") d++;
-      if (Player["Position"] === "Midfielder") m++;
-      if (Player["Position"] === "Forward") f++;
+      if (Player["starter"] === "Yes") s++;
+      if (Player["position"] === "Goalkeeper") g++;
+      if (Player["position"] === "Defender") d++;
+      if (Player["position"] === "Midfielder") m++;
+      if (Player["position"] === "Forward") f++;
     });
     dispatch(
       editMetadata({
@@ -73,8 +76,8 @@ export default function DeletePlayerModal({ currentPlayer }: any) {
       forwards: [],
     } as Starters;
     updatedPlayers.forEach((player: PlayerStats) => {
-      if (player["Starter"] === "Yes") {
-        switch (player["Position"]) {
+      if (player["starter"] === "Yes") {
+        switch (player["position"]) {
           case "Goalkeeper":
             starters.goalkeeper.push(player);
             break;
@@ -96,6 +99,7 @@ export default function DeletePlayerModal({ currentPlayer }: any) {
     dispatch(editStarters(starters));
     toast.success("Player deleted successfully.");
   }
+
   return (
     <>
       <Dialog>

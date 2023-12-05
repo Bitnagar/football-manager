@@ -42,23 +42,19 @@ export default function ImportTeamModal({
   const dispatch = useDispatch();
   const rosterData = useSelector((state: RootState) => state.rosterData);
 
-  // useEffect(() => {
-  //   console.log("impoort team modal rendered");
-  // }, []);
-
-  function dispatchFileSummary(results: RawCsvData): void {
+  function dispatchFileSummary(result: RawCsvData): void {
     let g = 0,
       d = 0,
       m = 0,
       f = 0,
       s = 0,
-      total = results.data.length;
-    results.data.forEach((data: PlayerStats) => {
-      if (data["Starter"] === "Yes") s++;
-      if (data["Position"] === "Goalkeeper") g++;
-      if (data["Position"] === "Defender") d++;
-      if (data["Position"] === "Midfielder") m++;
-      if (data["Position"] === "Forward") f++;
+      total = result.data.length;
+    result.data.forEach((data: PlayerStats) => {
+      if (data["starter"] === "Yes") s++;
+      if (data["position"] === "Goalkeeper") g++;
+      if (data["position"] === "Defender") d++;
+      if (data["position"] === "Midfielder") m++;
+      if (data["position"] === "Forward") f++;
     });
     dispatch(
       addMetadata({
@@ -74,6 +70,9 @@ export default function ImportTeamModal({
     );
   }
 
+  function toSnakeCase(str: string) {
+    return str.replace(/\s+/g, "_").toLowerCase();
+  }
   function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     const files = e.target.files;
@@ -85,17 +84,29 @@ export default function ImportTeamModal({
       // parse csv file
       Papa.parse(selectedFile, {
         header: true,
-        complete: function (results: Papa.ParseResult<PlayerStats>) {
+        complete: (result: RawCsvData) => {
           try {
-            setError(false);
-            // missing values check
-            results.data.forEach((data) => {
-              if (Object.values(data).includes(""))
-                throw Error("Missing values found in .csv file.");
-            });
-            // save file summary in state
-            dispatchFileSummary(results);
-            setPlayers(results);
+            // lowercase keys of players data
+            const lowerCasedData: PlayerStats[] = result.data.map(
+              (row: PlayerStats, index: number) => {
+                const processedRow = {} as PlayerStats;
+                for (const key in row) {
+                  if (row[key] === "")
+                    throw Error("Missing values found in .csv file.");
+                  if (row.hasOwnProperty(key)) {
+                    const lowercasedKey = key.toLowerCase();
+                    const lowercasedValue = row[key];
+                    const snakeCaseKey = toSnakeCase(lowercasedKey);
+                    processedRow[snakeCaseKey] = lowercasedValue;
+                  }
+                }
+                processedRow["uniqueKey"] = index.toString();
+                return processedRow;
+              }
+            );
+            result.data = lowerCasedData;
+            dispatchFileSummary(result);
+            setPlayers(result);
           } catch (error) {
             console.error(error);
             setError(true);
@@ -108,7 +119,6 @@ export default function ImportTeamModal({
   function handleImportConfirm(): void {
     if (players) {
       dispatch(addPlayersData(players));
-
       let starters = {
         goalkeeper: [],
         defenders: [],
@@ -116,8 +126,8 @@ export default function ImportTeamModal({
         forwards: [],
       } as Starters;
       players.data.forEach((player: PlayerStats) => {
-        if (player["Starter"] === "Yes") {
-          switch (player["Position"]) {
+        if (player["starter"] === "Yes") {
+          switch (player["position"]) {
             case "Goalkeeper":
               starters.goalkeeper.push(player);
               break;

@@ -1,19 +1,21 @@
 export type PlayerStats = {
-  Appearances: string;
-  Assists: string;
-  "Clean Sheets": string | number;
-  "Flag Image": string;
-  "Goals ": string;
-  Height: string;
-  "Jersey Number": string;
-  "Minutes Played": string;
-  Nationality: string;
-  "Player Image": string;
-  "Player Name": string;
-  Position: "Goalkeeper" | "Defender" | "Midfielder" | "Forward";
-  Saves: string;
-  Starter: string;
-  Weight: string | "Unknown";
+  appearances: string;
+  assists: string;
+  clean_sheets: string;
+  flag_image: string;
+  goals_: string;
+  height: string;
+  jersey_number: string;
+  minutes_played: string;
+  nationality: string;
+  player_image: string;
+  player_name: string;
+  position: "Goalkeeper" | "Defender" | "Midfielder" | "Forward";
+  saves: string;
+  starter: string;
+  weight: string | "Unknown";
+  [key: string]: string;
+  uniqueKey: string;
 };
 
 export type RosterData = {

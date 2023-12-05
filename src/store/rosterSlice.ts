@@ -32,14 +32,14 @@ const rosterSlice = createSlice({
 
     editPlayerData(state, action) {
       state.players.forEach((player: PlayerStats) => {
-        if (player["Player Image"] === action.payload.uniqueKey) {
-          player["Player Name"] = action.payload.playerName;
-          player["Jersey Number"] = action.payload.jersey;
-          player["Height"] = action.payload.height;
-          player["Weight"] = action.payload.weight;
-          player["Nationality"] = action.payload.nationality;
-          player["Position"] = action.payload.position;
-          player["Starter"] = action.payload.yes === true ? "Yes" : "No";
+        if (player["uniqueKey"] === action.payload.uniqueKey) {
+          player["player_name"] = action.payload.playerName;
+          player["jersey_number"] = action.payload.jersey;
+          player["height"] = action.payload.height;
+          player["weight"] = action.payload.weight;
+          player["nationality"] = action.payload.nationality;
+          player["position"] = action.payload.position;
+          player["starter"] = action.payload.yes === true ? "Yes" : "No";
         }
       });
     },
@@ -47,7 +47,7 @@ const rosterSlice = createSlice({
     deletePlayerData(state, action) {
       let currentPlayerIndex = state.players?.findIndex(
         (player: PlayerStats) =>
-          player["Player Image"] === action.payload.uniqueKey
+          player["uniqueKey"] === action.payload.uniqueKey
       ) as number;
       state.players?.splice(currentPlayerIndex, 1);
     },
