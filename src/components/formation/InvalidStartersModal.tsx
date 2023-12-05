@@ -14,7 +14,7 @@ export default function InvalidDataModal({
   if (rosterData.players.length < 1) {
     return (
       <>
-        <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D] rounded-md">
+        <div className="relative w-full h-full flex items-center justify-center p-8 bg-neutral-light rounded-md">
           <div className="w-full h-fit flex items-center justify-around gap-10">
             <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image
@@ -26,7 +26,7 @@ export default function InvalidDataModal({
                 priority={true}
               />
             </div>
-            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] text-white rounded-sm p-6">
+            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-background text-white rounded-sm p-6">
               <div className=" w-full h-3/4">
                 <div>
                   <h1></h1>
@@ -59,7 +59,7 @@ export default function InvalidDataModal({
   ) {
     return (
       <>
-        <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D] rounded-md">
+        <div className="relative w-full h-full flex items-center justify-center p-8 bg-neutral-light rounded-md">
           <div className="flex items-center gap-10">
             <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image
@@ -71,7 +71,7 @@ export default function InvalidDataModal({
                 priority={true}
               />
             </div>
-            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] rounded-sm p-6">
+            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-background rounded-sm p-6">
               <div className=" w-full h-3/4">
                 <div>
                   <h1></h1>
@@ -107,7 +107,7 @@ export default function InvalidDataModal({
   ) {
     return (
       <>
-        <div className="relative w-full h-full flex items-center justify-center p-8 bg-[#2D2D2D] rounded-md">
+        <div className="relative w-full h-full flex items-center justify-center p-8 bg-neutral-light rounded-md">
           <div className="flex items-center gap-10">
             <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image
@@ -119,7 +119,7 @@ export default function InvalidDataModal({
                 priority={true}
               />
             </div>
-            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] rounded-sm p-6">
+            <div className=" lg:w-[300px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-background rounded-sm p-6">
               <div className=" w-full h-3/4">
                 <div>
                   <h1></h1>

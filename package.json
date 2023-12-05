@@ -2,6 +2,18 @@
   "name": "football-manager",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Shivam Bhatnagar"
+  },
+  "keywords": [
+    "Beam Dynamics",
+    "Football Manager",
+    "bitnagar",
+    "Bitnagar",
+    "Next.js",
+    "typescript",
+    "redux toolkit"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

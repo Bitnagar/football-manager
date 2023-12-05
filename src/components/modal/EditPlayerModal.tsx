@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { editPlayerData, editStarters } from "@/store/rosterSlice";
 import { useDispatch } from "react-redux";
 import nations from "@/lib/nationalities.json";
@@ -40,7 +40,11 @@ type EditableData = {
   position: "Goalkeeper" | "Defender" | "Midfielder" | "Forward";
 };
 
-export default function EditPlayerModal({ currentPlayer }: any) {
+export default function EditPlayerModal({
+  currentPlayer,
+}: {
+  currentPlayer: PlayerStats;
+}) {
   const dispatch = useDispatch();
   const uniqueKey = currentPlayer["Player Image"];
 
@@ -86,7 +90,7 @@ export default function EditPlayerModal({ currentPlayer }: any) {
     }
   }
 
-  function dispatchStarters(currentValue: any) {
+  function dispatchStarters(currentValue: PlayerStats[]) {
     let starters = {
       goalkeeper: [],
       defenders: [],

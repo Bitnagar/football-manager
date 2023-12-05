@@ -26,7 +26,7 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
   ) {
     return (
       <>
-        <div className="flex w-full h-full items-center justify-center bg-[#2D2D2D] p-8 rounded-md">
+        <div className="flex w-full h-full items-center justify-center bg-neutral-light p-8 rounded-md">
           <div className="w-full h-full flex items-center justify-around gap-10">
             <div className="relative lg:min-w-[625px] lg:min-h-[420px] xl:min-w-[808px] xl:h-[541px]">
               <Image
@@ -97,7 +97,7 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
                 </div>
               </div>
             </div>
-            <div className="lg:min-w-[320px] lg:h-[422px] lg:text-xs xl:text-sm xl:min-w-[322px] xl:h-[541px] flex flex-col bg-[#222222] text-white rounded-sm p-6">
+            <div className="lg:min-w-[320px] lg:h-[422px] xl:min-w-[400px] xl:h-[541px] lg:text-xs xl:text-sm flex flex-col bg-background text-white rounded-sm p-6">
               <div
                 style={{
                   backgroundImage: `url(${showPlayer["Player Image"]})`,
@@ -112,7 +112,7 @@ export default function Formation({ rosterData }: { rosterData: RosterData }) {
                   <h1 className="relative text-[40px] text-primary-orange font-semibold z-[50]">
                     {showPlayer["Jersey Number"]}
                   </h1>
-                  <h1 className="absolute top-0 left-0 text-[109px] text-[#3A3731] font-semibold transform lg:translate-y-[-2px] xl:translate-y-[5px] xl:translate-x-[-6px] z-0">
+                  <h1 className="absolute top-0 left-0 text-[109px] text-text-shadow font-semibold transform lg:translate-y-[-2px] xl:translate-y-[5px] xl:translate-x-[-6px] z-0">
                     {showPlayer["Jersey Number"]}
                   </h1>
                 </div>

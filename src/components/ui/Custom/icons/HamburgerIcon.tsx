@@ -3,9 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 
-type Props = {};
-
-export default function FormationIcon({}: Props) {
+export default function FormationIcon() {
   const pathname = usePathname();
 
   return (

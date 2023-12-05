@@ -48,6 +48,7 @@ module.exports = {
           normal: "hsl(var(--text-normal))",
           muted: "hsl(var(--text-muted))",
           disabled: "hsl(var(--text-disabled))",
+          shadow: "hsl(40, 8%, 21%)",
         },
         // secondary: {
         //   DEFAULT: "hsl(var(--secondary))",

@@ -17,7 +17,11 @@ import { editMetadata } from "@/store/metadataSlice";
 import DeleteIcon from "../ui/DeleteIcon";
 import toast from "react-hot-toast";
 
-export default function DeletePlayerModal({ currentPlayer }: any) {
+export default function DeletePlayerModal({
+  currentPlayer,
+}: {
+  currentPlayer: PlayerStats;
+}) {
   const dispatch = useDispatch();
 
   // unique key for editing and deleting the player
