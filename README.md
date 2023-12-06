@@ -1,7 +1,6 @@
 # Football Manager - Built by [Shivam Bhatnagar](https://www.bitnagar.dev)
 
-[Football Manager](https://football-manager-ruby.vercel.app/) is a fully functional Web App that allows you to manage the data of a football team, created for **Beam Dynamics**'s Frontend Engineer hiring challenge 2023.
-
+[Football Manager](https://football-manager-ruby.vercel.app/) is a fully functional Web App that allows you to manage the data of a football team, created for **Beam Dynamics**'s Frontend Developer hiring challenge 2023.
 **Live Demo**: https://football-manager-ruby.vercel.app/
 
 > **Note**: Use the exact files given in clickup document. An error will be thrown if the fields are different. Make sure to use the same files given in [clickup document](https://doc.clickup.com/31162583/d/h/xq06q-7851/f8266dc69a1571b/xq06q-7071).
@@ -24,7 +23,7 @@ Features built (including all sub requirements)
 
 ## The UI is responsive
 
-The UI is responsive. At-least `1200px` width is necessary for viewing the project. The project is best viewed on `1500px` width but is adaptable to a minimum of `1200px` width. `Shadcn UI` was used to built the project, except for the `Formation` page which is fully custom built.
+The UI is responsive. At-least `1200px` width is necessary for viewing the project. The project is adaptable to a minimum of `1200px` width. `Shadcn UI` is used to built the project, except for the `Formation` page which is fully custom built.
 
 ## Project Overview
 
@@ -42,7 +41,7 @@ The reason for using Next.js was to take advantage of their optimised platform a
 
 ### Importing
 
-When used imports the data, it is being parsed with the `Papaparse` library. After parsing it and extracting all the columns and their values the `Papaparse` library returns us the data in the following format:
+When user imports the data, it is being parsed with the `Papaparse` library. After parsing it and extracting all the columns and their values the `Papaparse` library returns the data in the following format:
 
 ```javascript
 type RawCsvData = {
@@ -52,7 +51,7 @@ type RawCsvData = {
 };
 ```
 
-When the parsing complete, we iterate through the `data` array of players and do the following:
+When the parsing completes, we iterate through the `data` array of players and do the following:
 
 - Check the array for any missing values. If missing values are found, error is thrown.
 - Lowercase every `key` of the `playerStats` object.
@@ -72,7 +71,7 @@ When user clicks the `Edit player` button inside the modal, we check for missing
 
 ### Deleting
 
-When user decides to delete a player, the selected players unique key is sent to the reducer. If the reducer found the same unique key inside the state, the it delete the entire player object associated with that key. Hence delete operation completes. Refer to `src/components/modal/DeletePlayerModal.tsx`
+When user decides to delete a player, the selected player's unique key is sent to the reducer. If the reducer found the same unique key inside the state, it deletes the entire player object associated with that key. Hence delete operation completes. Refer to `src/components/modal/DeletePlayerModal.tsx`
 
 ### Search
 
@@ -150,20 +149,20 @@ my-app
 
 ## Tech Stack
 
-### Next.js, Typescript, React, Redux/Redux Toolkit, TailwindCSS.
+**Next.js**, **Typescript**, **React**, **Redux/Redux Toolkit**,**TailwindCSS**.
 
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone https://github.com/Bitnagar/football-manager.git
+  git clone https://github.com/Bitnagar/football-manager-shivam-bhatnagar.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd football-manager
+  cd football-manager-shivam-bhatnagar
 ```
 
 Install dependencies
@@ -180,7 +179,7 @@ Start the server
 
 ## Demo
 
-Live Demo: https://football-manager-ruby.vercel.app/
+Live Demo: <https://football-manager-ruby.vercel.app/>
 
 ## 🚀 About Me
 
