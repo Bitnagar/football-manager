@@ -23,7 +23,7 @@ Features built (including all sub requirements)
 
 ## The UI is responsive
 
-The UI is responsive. At-least `1200px` width is necessary for viewing the project. The project is adaptable to a minimum of `1200px` width. `Shadcn UI` is used to built the project, except for the `Formation` page which is fully custom built.
+At-least `1200px` width is necessary for viewing the project. The project is adaptable to a minimum of `1200px` width. `Shadcn UI` is used to build the project, except for the `Formation` page which is fully custom built.
 
 ## Project Overview
 
@@ -59,7 +59,7 @@ When the parsing completes, we iterate through the `data` array of players and d
 
 ### Displaying
 
-After the above said operations are complete, we add the data into the global state. On the roster table page, we iterate through the data that we stored in state and display the fields and its respective data. See `src/app/page.tsx`
+After the above said operations are complete, we push this data into the state when user finally clicks on `import` button inside the modal. On the roster table page, we iterate through the data that we stored in state and display the fields and its respective data. See `src/app/page.tsx`
 
 ### Editing
 
@@ -92,7 +92,7 @@ Midfielder, of which three are required;
 Forward, of which three are required;
 ```
 
-we go ahead and create the formation over the field. If we don't have the starters players in above fashion, we display the respective error modals.
+we go ahead and create the formation over the field. If we don't have the starters players in above fashion, we display the respective error modals. The formation dots (player dots) over the field are being shown with the help of `rosterData.starters` array. It contains every starter player, and is updated with each update or deletion of the players.
 
 ## State Structure
 
@@ -100,7 +100,7 @@ The state has been structured in the following fashion:
 
 ```javascript
 
-// state for metadata - total
+// state for metadata
 metadata: {
     goalkeepers: 0,
     defenders: 0,
@@ -183,7 +183,7 @@ Live Demo: <https://football-manager-ruby.vercel.app/>
 
 ## 🚀 About Me
 
-I'm a frontend Engineer and an open source contributor based out of Noida, India. I love creating fully functional web apps.
+I'm a Frontend Developer and an open source contributor based out of Noida, India. I love creating fully functional web apps.
 
 I am skilled in Next.js, React, JavaScript, MongoDB, tailwind + several other developer tools.
 
