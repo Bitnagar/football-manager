@@ -99,7 +99,6 @@ we go ahead and create the formation over the field. If we don't have the starte
 The state has been structured in the following fashion:
 
 ```javascript
-
 // state for metadata
 metadata: {
     goalkeepers: 0,
@@ -180,6 +179,10 @@ Start the server
 ## Demo
 
 Live Demo: <https://football-manager-ruby.vercel.app/>
+
+## Commit details
+
+The commits on this project are name by their scope of work or where exactly they make changes. For example `feat(ui): <message>` changes something in the UI or `feat(redux): <message>` changes something in the redux logic.
 
 ## 🚀 About Me
 
