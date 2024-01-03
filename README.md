@@ -1,15 +1,13 @@
 # Football Manager - Built by [Shivam Bhatnagar](https://www.bitnagar.dev)
 
-[Football Manager](https://football-manager-ruby.vercel.app/) is a fully functional Web App that allows you to manage the data of a football team, created for **Beam Dynamics**'s Frontend Developer hiring challenge 2023.
+[Football Manager](https://football-manager-ruby.vercel.app/) is a fully functional Web App that allows you to manage the data of a football team. (hiring challenge)
 **Live Demo**: https://football-manager-ruby.vercel.app/
 
-> **Note**: Use the exact files given in clickup document. An error will be thrown if the fields are different. Make sure to use the same files given in [clickup document](https://doc.clickup.com/31162583/d/h/xq06q-7851/f8266dc69a1571b/xq06q-7071).
+> **Note**: Use the exact files located in `public/assets/csv/` directory.
 
 ## All requirements have been met
 
-This project fulfils every feature request that was given in the [clickup document](https://doc.clickup.com/31162583/d/h/xq06q-7851/f8266dc69a1571b/xq06q-7071)/specification sheet.
-
-Features built (including all sub requirements)
+Features built:-
 
 - Roster Details ✅
   - Editable Team name ✅

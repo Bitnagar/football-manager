@@ -13,11 +13,8 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Football Manager | Shivam Bhatnagar's Submisson",
   description:
-    "Football manager is a Next.js Web App built by Shivam Bhatnagar for Beam Dynamics Hiring Challenge.",
+    "Football manager is a Next.js Web App built by Shivam Bhatnagar for a Hiring Challenge.",
   keywords: [
-    "Beam Dynamics",
-    "beam dynamics",
-    "BEAM DYNAMICS",
     "hiring challenge",
     "hiring",
     "shivam bhatnagar",
